@@ -5,3 +5,4 @@ Keep a Changelog, and this project uses semantic versioning.
 
 ## [1.0.0] - 2026-09-02
 
+### Added
