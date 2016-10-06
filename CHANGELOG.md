@@ -9,3 +9,4 @@ Keep a Changelog, and this project uses semantic versioning.
 
 - `logparse` module that reads a committed `git log -p` export into commits and
   diff hunks with no git invocation.
+- `entropy` module with Shannon entropy and character-class analysis.
