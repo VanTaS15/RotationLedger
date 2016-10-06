@@ -8,3 +8,4 @@ Keep a Changelog, and this project uses semantic versioning.
 ### Added
 
 - `logparse` module that reads a committed `git log -p` export into commits and
+  diff hunks with no git invocation.
