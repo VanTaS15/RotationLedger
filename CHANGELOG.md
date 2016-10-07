@@ -10,3 +10,5 @@ Keep a Changelog, and this project uses semantic versioning.
 - `logparse` module that reads a committed `git log -p` export into commits and
   diff hunks with no git invocation.
 - `entropy` module with Shannon entropy and character-class analysis.
+- `detect` module with named rules: AWS access keys, private key headers,
+  bearer tokens, connection strings, and generic high-entropy assignments.
