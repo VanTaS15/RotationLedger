@@ -13,3 +13,4 @@ Keep a Changelog, and this project uses semantic versioning.
 - `detect` module with named rules: AWS access keys, private key headers,
   bearer tokens, connection strings, and generic high-entropy assignments.
 - `lifetime` module reconstructing each secret's introduce, rotate, and
+  still-live state along with the exposure window in days.
