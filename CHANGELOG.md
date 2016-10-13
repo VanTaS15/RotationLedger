@@ -14,3 +14,4 @@ Keep a Changelog, and this project uses semantic versioning.
   bearer tokens, connection strings, and generic high-entropy assignments.
 - `lifetime` module reconstructing each secret's introduce, rotate, and
   still-live state along with the exposure window in days.
+- `report` module producing scan, lifetime, and exposure-days reports.
