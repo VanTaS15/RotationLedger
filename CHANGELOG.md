@@ -15,3 +15,9 @@ Keep a Changelog, and this project uses semantic versioning.
 - `lifetime` module reconstructing each secret's introduce, rotate, and
   still-live state along with the exposure window in days.
 - `report` module producing scan, lifetime, and exposure-days reports.
+- CLI with `scan`, `lifetime`, `report`, and `version` subcommands.
+- Hand authored `samples/history.gitlog` test vector with one still-live and
+  two rotated synthetic credentials.
+- `docs/assets/logo.svg` and `docs/assets/exposure-timeline.svg`.
+
+<!-- draft note 1 -->
