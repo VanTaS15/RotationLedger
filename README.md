@@ -56,3 +56,15 @@ pip install -e .
 Or run straight from the source tree without installing:
 
 ```
+set PYTHONPATH=src
+python -m rotationledger report samples/history.gitlog
+```
+
+## Commands
+
+Four subcommands. Each reads a `git log -p` export path, except `version`.
+
+| Command    | Argument  | What it prints                                          |
+|------------|-----------|---------------------------------------------------------|
+| `scan`     | `logfile` | Every credential-shaped finding, one line per hit       |
+| `lifetime` | `logfile` | Introduce, rotate, and still-live state per secret      |
