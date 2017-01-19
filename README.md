@@ -44,3 +44,15 @@ If you only remember one thing about the output, remember that a live finding
 and a rotated finding demand different actions. A live finding means rotate the
 credential now. A rotated finding means confirm the window, and treat anything
 that was exposed for weeks as compromised regardless of the later rotation.
+
+## Install
+
+No third-party dependencies. Python 3.11 or newer, standard library only.
+
+```
+pip install -e .
+```
+
+Or run straight from the source tree without installing:
+
+```
