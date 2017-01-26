@@ -68,3 +68,15 @@ Four subcommands. Each reads a `git log -p` export path, except `version`.
 |------------|-----------|---------------------------------------------------------|
 | `scan`     | `logfile` | Every credential-shaped finding, one line per hit       |
 | `lifetime` | `logfile` | Introduce, rotate, and still-live state per secret      |
+| `report`   | `logfile` | The exposure-days report, worst window first (headline) |
+| `version`  | none      | The package version string                              |
+
+```
+rotationledger scan     <logfile>
+rotationledger lifetime <logfile>
+rotationledger report   <logfile>
+rotationledger version
+```
+
+## The lifetime state machine
+
