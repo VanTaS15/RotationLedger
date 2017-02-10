@@ -80,3 +80,15 @@ rotationledger version
 
 ## The lifetime state machine
 
+Each distinct credential fingerprint moves through a small state machine as the
+walk proceeds oldest commit to newest. There are three observable states:
+`absent` (never seen, the starting point), `live` (added and not yet removed),
+and `rotated` (added and later removed). The report calls a still-open window
+`live` and a closed window `rotated`.
+
+| From state | Event in a commit                     | To state  | Recorded                          |
+|------------|---------------------------------------|-----------|-----------------------------------|
+| absent     | fingerprint appears in added lines    | live      | `introduced_sha`, `introduced_at` |
+| live       | same fingerprint appears in del lines | rotated   | `removed_sha`, `removed_at`       |
+| live       | end of history reached, still present | live      | window measured to newest commit  |
+| rotated    | fingerprint added again later         | live      | a new, separate lifetime opens    |
