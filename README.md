@@ -92,3 +92,15 @@ and `rotated` (added and later removed). The report calls a still-open window
 | live       | same fingerprint appears in del lines | rotated   | `removed_sha`, `removed_at`       |
 | live       | end of history reached, still present | live      | window measured to newest commit  |
 | rotated    | fingerprint added again later         | live      | a new, separate lifetime opens    |
+
+Two details are worth stating because they change the numbers:
+
+- Within a single commit, a line that is edited shows up as both a deletion and
+  an addition. If a fingerprint appears in both the added and removed sets of
+  the same commit, it is treated as still present, not rotated. Only a deletion
+  with no matching addition closes the window (`lifetime.py`, the removal loop
+  guards on `fp not in added`).
+- A value that is removed and later re-added is modelled as two separate
+  lifetimes rather than one merged span, so a rotation that reuses the same
+  value is never silently collapsed into a single window.
+
