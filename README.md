@@ -117,3 +117,15 @@ In the initial commit (`3e2f1a0b`, dated 2026-01-05) the sample adds this line:
 
 The `bearer-token` rule matches the value after `Bearer`, and it is fingerprinted
 to `63c44ec215be`. The state machine moves this fingerprint from `absent` to
+`live`, recording `introduced_at = 2026-01-05`.
+
+Nothing touches that line until commit `9f3c1a7d`, dated 2026-04-02, which
+removes it:
+
+```
+-        self.auth_header = "Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE"
++        self.auth_header = "Bearer " + os.environ["SERVICE_TOKEN"]
+```
+
+The old value appears in the removed set and not in the added set of that
+commit, so the window closes: state becomes `rotated`, `removed_at =
