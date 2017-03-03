@@ -104,3 +104,16 @@ Two details are worth stating because they change the numbers:
   lifetimes rather than one merged span, so a rotation that reuses the same
   value is never silently collapsed into a single window.
 
+## A worked example
+
+Follow one real secret from the sample export to its exposure number. Take the
+bearer token planted in `services/client.py`.
+
+In the initial commit (`3e2f1a0b`, dated 2026-01-05) the sample adds this line:
+
+```
++        self.auth_header = "Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE"
+```
+
+The `bearer-token` rule matches the value after `Bearer`, and it is fingerprinted
+to `63c44ec215be`. The state machine moves this fingerprint from `absent` to
