@@ -141,3 +141,15 @@ a99fa712c31c generic-high-entropy introduced=5c4d3e2f1a@2026-02-14 removed=-@- s
 
 ## Detection rules
 
+Rules are tried in a fixed order. The four structural rules are checked first;
+the generic high-entropy rule only fires on a captured region that no
+structural rule already claimed, which avoids double counting one value.
+
+| Rule                   | What it matches                                              | Confidence                                  |
+|------------------------|-------------------------------------------------------------|---------------------------------------------|
+| `aws-access-key`       | `AKIA` or `ASIA` then 16 uppercase or digit characters      | High: the shape is specific to AWS keys     |
+| `private-key-header`   | a PEM `BEGIN ... PRIVATE KEY` header line                   | High: the header is unambiguous             |
+| `bearer-token`         | a `Bearer` value of 20+ URL-safe base64 characters          | High: structural, though value is opaque    |
+| `connection-string`    | a password inside a `postgres/mysql/mongodb/redis/amqp` URL | High: password position in the URL is fixed |
+| `generic-high-entropy` | a secret/token/api-key/password assignment, 20+ chars       | Heuristic: entropy and length gated only    |
+
