@@ -153,3 +153,15 @@ structural rule already claimed, which avoids double counting one value.
 | `connection-string`    | a password inside a `postgres/mysql/mongodb/redis/amqp` URL | High: password position in the URL is fixed |
 | `generic-high-entropy` | a secret/token/api-key/password assignment, 20+ chars       | Heuristic: entropy and length gated only    |
 
+The structural rules are high confidence because they match a shape that is
+specific to a kind of credential, not just to "long random string". The generic
+rule is a heuristic and is described honestly in the next section.
+
+## Entropy scoring and its false positives
+
+The `generic-high-entropy` rule fires only when a value assigned to a
+secret-like name is at least 20 characters, mixes at least two character classes
+(lower, upper, digit, symbol), and has Shannon entropy of at least 3.5 bits per
+character. The thresholds live as named constants in `detect.py`
+(`GENERIC_MIN_LEN`, `GENERIC_MIN_ENTROPY`) so a reader can reproduce any generic
+finding by hand.
