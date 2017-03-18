@@ -165,3 +165,15 @@ secret-like name is at least 20 characters, mixes at least two character classes
 character. The thresholds live as named constants in `detect.py`
 (`GENERIC_MIN_LEN`, `GENERIC_MIN_ENTROPY`) so a reader can reproduce any generic
 finding by hand.
+
+This rule is a heuristic, and heuristics are wrong in both directions:
+
+- False negatives. A genuinely secret value that happens to be short or
+  low-entropy will not trip the gate. A 16-character password made of dictionary
+  words can sit below 3.5 bits per character and be missed.
+- False positives. A long, mixed, high-entropy string that is assigned to a
+  secret-like name but is not actually a credential (a hash, a UUID list, a
+  base64 blob of test data) will be flagged. The rule cannot tell a real API key
+  from a random-looking constant; it only measures shape.
+
+Entropy is a proxy for randomness, not a proof of secrecy. Treat generic
