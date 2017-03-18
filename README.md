@@ -129,3 +129,15 @@ removes it:
 
 The old value appears in the removed set and not in the added set of that
 commit, so the window closes: state becomes `rotated`, `removed_at =
+2026-04-02`. The exposure is the whole-day delta between the two dates, from
+2026-01-05 to 2026-04-02, which is 87 days. That is exactly what `lifetime`
+prints for `63c44ec215be`, and what lands at the top of the report:
+
+```
+5dacc6454799 aws-access-key introduced=3e2f1a0b9c@2026-01-05 removed=7a2b9c8d1e@2026-03-20 state=rotated exposure_days=74
+63c44ec215be bearer-token introduced=3e2f1a0b9c@2026-01-05 removed=9f3c1a7d24@2026-04-02 state=rotated exposure_days=87
+a99fa712c31c generic-high-entropy introduced=5c4d3e2f1a@2026-02-14 removed=-@- state=live exposure_days=47
+```
+
+## Detection rules
+
