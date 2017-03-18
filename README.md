@@ -177,3 +177,16 @@ This rule is a heuristic, and heuristics are wrong in both directions:
   from a random-looking constant; it only measures shape.
 
 Entropy is a proxy for randomness, not a proof of secrecy. Treat generic
+findings as candidates to review, and tune the two thresholds in `detect.py` to
+your codebase rather than assuming the defaults are correct for your data.
+
+## Why fingerprints and not values
+
+rotationledger never stores or prints a raw secret value. Every finding is keyed
+to a fingerprint, which is a truncated SHA-256 of the matched bytes: the full
+digest computed with `hashlib.sha256`, hex-encoded, then cut to the first 12
+characters (`_fingerprint` in `detect.py`).
+
+That choice does two things. It gives each logical secret a stable identity, so
+the same value added in one commit and deleted in another is recognised as one
+credential rather than two unrelated hits, which is what makes lifetime tracking
