@@ -190,3 +190,15 @@ characters (`_fingerprint` in `detect.py`).
 That choice does two things. It gives each logical secret a stable identity, so
 the same value added in one commit and deleted in another is recognised as one
 credential rather than two unrelated hits, which is what makes lifetime tracking
+possible at all. And it means the tool's output, its logs, and its reports can
+be committed, shared, or pasted into a ticket without leaking the secret they
+describe. The fingerprint identifies the secret without being the secret. A test
+(`test_fingerprint_never_contains_secret`) asserts the secret string never
+appears inside its own fingerprint.
+
+The truncation to 12 hex characters (48 bits) is a readability tradeoff. It is
+short enough to scan by eye in a report and long enough that an accidental
+collision between two different secrets in one export is very unlikely. It is not
+a security boundary: a fingerprint is a label, not a commitment scheme.
+
+## Output format
