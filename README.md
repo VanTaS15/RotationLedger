@@ -202,3 +202,15 @@ collision between two different secrets in one export is very unlikely. It is no
 a security boundary: a fingerprint is a label, not a commitment scheme.
 
 ## Output format
+
+Every report is a list of text lines with no trailing whitespace, so runs diff
+cleanly in git. No wall-clock time is ever read; all dates come from the parsed
+commits, which keeps output deterministic.
+
+`scan` prints one line per finding per commit that adds it:
+
+```
+python -m rotationledger scan samples/history.gitlog
+```
+
+```
