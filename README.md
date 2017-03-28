@@ -214,3 +214,15 @@ python -m rotationledger scan samples/history.gitlog
 ```
 
 ```
+3e2f1a0b9c 2026-01-05 aws-access-key 5dacc6454799 config.py len=20 entropy=3.00
+3e2f1a0b9c 2026-01-05 bearer-token 63c44ec215be services/client.py len=38 entropy=4.29
+5c4d3e2f1a 2026-02-14 generic-high-entropy a99fa712c31c settings.py len=51 entropy=4.76
+```
+
+| Field       | Example                | Meaning                                    |
+|-------------|------------------------|--------------------------------------------|
+| short sha   | `3e2f1a0b9c`           | first 10 chars of the commit that added it |
+| date        | `2026-01-05`           | commit date, `YYYY-MM-DD`                  |
+| rule        | `aws-access-key`       | which detection rule matched               |
+| fingerprint | `5dacc6454799`         | 12-char truncated SHA-256 of the value     |
+| path        | `config.py`            | file the added line touched                |
