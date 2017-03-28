@@ -226,3 +226,15 @@ python -m rotationledger scan samples/history.gitlog
 | rule        | `aws-access-key`       | which detection rule matched               |
 | fingerprint | `5dacc6454799`         | 12-char truncated SHA-256 of the value     |
 | path        | `config.py`            | file the added line touched                |
+| `len=`      | `len=20`               | length of the matched value in characters  |
+| `entropy=`  | `entropy=3.00`         | Shannon entropy, bits/char, two decimals   |
+
+`lifetime` prints one line per tracked credential:
+
+```
+python -m rotationledger lifetime samples/history.gitlog
+```
+
+```
+5dacc6454799 aws-access-key introduced=3e2f1a0b9c@2026-01-05 removed=7a2b9c8d1e@2026-03-20 state=rotated exposure_days=74
+63c44ec215be bearer-token introduced=3e2f1a0b9c@2026-01-05 removed=9f3c1a7d24@2026-04-02 state=rotated exposure_days=87
