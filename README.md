@@ -250,3 +250,16 @@ a99fa712c31c generic-high-entropy introduced=5c4d3e2f1a@2026-02-14 removed=-@- s
 | `state=`         | `live` or `rotated`                                         |
 | `exposure_days=` | whole days the value was live (see the lower-bound note)    |
 
+`report` is the headline: exposure days, worst window first, with a summary
+footer.
+
+```
+python -m rotationledger report samples/history.gitlog
+```
+
+```
+EXPOSURE DAYS REPORT
+
+  87d  bearer-token           63c44ec215be rotated
+  74d  aws-access-key         5dacc6454799 rotated
+  47d  generic-high-entropy   a99fa712c31c live (open, measured to newest commit)
