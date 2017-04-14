@@ -238,3 +238,15 @@ python -m rotationledger lifetime samples/history.gitlog
 ```
 5dacc6454799 aws-access-key introduced=3e2f1a0b9c@2026-01-05 removed=7a2b9c8d1e@2026-03-20 state=rotated exposure_days=74
 63c44ec215be bearer-token introduced=3e2f1a0b9c@2026-01-05 removed=9f3c1a7d24@2026-04-02 state=rotated exposure_days=87
+a99fa712c31c generic-high-entropy introduced=5c4d3e2f1a@2026-02-14 removed=-@- state=live exposure_days=47
+```
+
+| Field            | Meaning                                                     |
+|------------------|-------------------------------------------------------------|
+| fingerprint      | the secret's stable identity                                |
+| rule             | the rule that first matched it                              |
+| `introduced=`    | `sha@date` of the commit that first added the value         |
+| `removed=`       | `sha@date` of the removal, or `-@-` when still live         |
+| `state=`         | `live` or `rotated`                                         |
+| `exposure_days=` | whole days the value was live (see the lower-bound note)    |
+
