@@ -263,3 +263,15 @@ EXPOSURE DAYS REPORT
   87d  bearer-token           63c44ec215be rotated
   74d  aws-access-key         5dacc6454799 rotated
   47d  generic-high-entropy   a99fa712c31c live (open, measured to newest commit)
+
+total=3 live=1 rotated=2 exposure_days_sum=208
+```
+
+The footer counts total findings, splits them into live and rotated, and sums
+the exposure days across all findings. The `(open, measured to newest commit)`
+annotation marks any window that is a lower bound rather than a closed measure.
+
+## Exit codes
+
+The exit code lets you gate a pipeline on findings without parsing the text.
+
