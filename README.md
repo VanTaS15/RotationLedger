@@ -287,3 +287,15 @@ Verified in this session:
 report samples/history.gitlog  -> 1   (findings present)
 scan   samples/history.gitlog  -> 1   (findings present)
 version                        -> 0
+report nope.gitlog             -> 2   (file not found)
+```
+
+In CI, a non-zero exit from `report` fails the job. To gate specifically on new
+exposure between two revisions, run `report` against a `git log -p` export of
+each and diff the two outputs; because the output is sorted and deterministic,
+the diff is stable.
+
+## The sample history
+
+`samples/history.gitlog` is a hand-authored test vector, not production data. It
+imitates the output of `git log -p --date=iso` for a small imaginary service
