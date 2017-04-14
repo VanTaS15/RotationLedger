@@ -275,3 +275,15 @@ annotation marks any window that is a lower bound rather than a closed measure.
 
 The exit code lets you gate a pipeline on findings without parsing the text.
 
+| Code | Meaning                                             |
+|------|-----------------------------------------------------|
+| 0    | ran cleanly and found nothing (`version` also exits 0) |
+| 1    | ran cleanly and findings are present                |
+| 2    | usage error or the input file could not be read     |
+
+Verified in this session:
+
+```
+report samples/history.gitlog  -> 1   (findings present)
+scan   samples/history.gitlog  -> 1   (findings present)
+version                        -> 0
