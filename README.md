@@ -299,3 +299,15 @@ the diff is stable.
 
 `samples/history.gitlog` is a hand-authored test vector, not production data. It
 imitates the output of `git log -p --date=iso` for a small imaginary service
+repository. It was written by hand so the credential lifetimes are known exactly
+and can be asserted in the tests; git was not run to produce it.
+
+Every credential in the file is synthetic and obviously invalid. None of these
+values authenticate against anything, and each spells out placeholder words so a
+reader is never confused about whether it is real:
+
+- `AKIAEXAMPLE00000FAKE` is an AWS access key id shape carrying the literal
+  words EXAMPLE and FAKE.
+- `Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE` is a placeholder bearer token.
+- `sk-live-EXAMPLE9d4f7b2a6c8e1f3a5b7d9e0c2f4a6b8dFAKE` uses the common
+  `sk-live-` prefix but is padded with the words EXAMPLE and FAKE.
