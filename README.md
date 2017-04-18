@@ -311,3 +311,15 @@ reader is never confused about whether it is real:
 - `Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE` is a placeholder bearer token.
 - `sk-live-EXAMPLE9d4f7b2a6c8e1f3a5b7d9e0c2f4a6b8dFAKE` uses the common
   `sk-live-` prefix but is padded with the words EXAMPLE and FAKE.
+
+The export holds four commits, printed newest first as git does. The initial
+commit plants the AWS key and bearer token; a later commit rotates the AWS key;
+a later commit removes the bearer token; and one commit adds a generic analytics
+key that is never removed, so it stays live. That is one live and two rotated
+findings, matching the report above. See `samples/README.md` for the full
+timeline table.
+
+## Limitations
+
+Things this tool does not do, stated plainly:
+
