@@ -323,3 +323,16 @@ timeline table.
 
 Things this tool does not do, stated plainly:
 
+- It does not run git. It parses a `git log -p` text export you provide. If a
+  secret existed only in a commit that is not in the export, it is invisible.
+- Exposure days for a still-live secret are measured against the newest commit
+  in the export, because the tool is offline and has no later reference point.
+  It is a lower bound, labelled `open` in the report, not the days since today.
+- Detection is line oriented. A multi-line PEM key body is recognised only by
+  its BEGIN header line, and a secret split across diff lines is not
+  reassembled.
+- The generic high-entropy rule is a heuristic. It will miss a low-entropy
+  secret and can flag a long random-looking value that is not actually a
+  credential. Tune the thresholds in `detect.py` for your data.
+- Fingerprints match exact byte-identical values. A secret that is reformatted,
+  re-encoded, or re-cased between commits reads as two different secrets.
