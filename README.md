@@ -360,3 +360,15 @@ Key on a truncated SHA-256 fingerprint rather than the raw value. Storing raw
 values would make lifetime tracking trivial but would turn every report and log
 line into a new place the secret leaks. Fingerprinting keeps identity while
 making the output safe to share, at the price of not being able to show the
+value itself. That tradeoff is described in full under "Why fingerprints and not
+values".
+
+Model re-added values as separate lifetimes. Merging a remove-then-readd into
+one span would hide the fact that a secret was rotated and then reintroduced,
+which is exactly the kind of mistake worth surfacing. Separate lifetimes keep
+each window honest.
+
+## Repository layout
+
+```
+rotationledger/
