@@ -336,3 +336,15 @@ Things this tool does not do, stated plainly:
   credential. Tune the thresholds in `detect.py` for your data.
 - Fingerprints match exact byte-identical values. A secret that is reformatted,
   re-encoded, or re-cased between commits reads as two different secrets.
+- There is no binary or large-file handling; the input is expected to be a text
+  diff export.
+
+## Design decisions
+
+The choices below are the ones a reader is most likely to question, with the
+alternative that was rejected.
+
+Parse an offline `git log -p` export instead of invoking git. The obvious
+alternative is to shell out to git (or use a git library) and walk history
+directly. That was rejected for three reasons. It removes a dependency on git
+being installed and on the analysed repository being present, so the tool can
