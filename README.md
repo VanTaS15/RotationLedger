@@ -348,3 +348,15 @@ Parse an offline `git log -p` export instead of invoking git. The obvious
 alternative is to shell out to git (or use a git library) and walk history
 directly. That was rejected for three reasons. It removes a dependency on git
 being installed and on the analysed repository being present, so the tool can
+run against an export captured elsewhere, in an air-gapped review, or from a
+repository you no longer have cloned. It makes the input a plain text file that
+tests can author by hand with known lifetimes, which is exactly what
+`samples/history.gitlog` is. And it keeps the tool deterministic and side-effect
+free: no subprocess, no network, no clock, so the same input always yields the
+same report. The cost is that the tool only sees what the export contains, which
+is stated first in the limitations.
+
+Key on a truncated SHA-256 fingerprint rather than the raw value. Storing raw
+values would make lifetime tracking trivial but would turn every report and log
+line into a new place the secret leaks. Fingerprinting keeps identity while
+making the output safe to share, at the price of not being able to show the
