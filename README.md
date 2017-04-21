@@ -372,3 +372,15 @@ each window honest.
 
 ```
 rotationledger/
+  src/rotationledger/
+    __init__.py     package exports and __version__
+    __main__.py     enables python -m rotationledger
+    cli.py          argparse subcommands, reads files, sets exit codes
+    logparse.py     parse git log -p export into commits and diff hunks
+    entropy.py      Shannon entropy and character-class analysis
+    detect.py       named credential rules and fingerprinting
+    lifetime.py     introduce / rotate / still-live state machine
+    report.py       scan, lifetime, and exposure-days report builders
+  tests/
+    test_logparse.py   parser: commit count, order, dates, added/removed lines
+    test_entropy.py    entropy math and the looks_random gate
