@@ -384,3 +384,15 @@ rotationledger/
   tests/
     test_logparse.py   parser: commit count, order, dates, added/removed lines
     test_entropy.py    entropy math and the looks_random gate
+    test_detect.py     each rule, fingerprint stability, no-secret-in-fingerprint
+    test_lifetime.py   end-to-end lifetimes against the sample, exposure windows
+  samples/
+    history.gitlog     hand-authored git log -p test vector
+    README.md          the sample's timeline and expected lifetimes
+  docs/assets/
+    logo.svg              wordmark with a lifetime segment mark
+    exposure-timeline.svg exposure windows bar chart
+  pyproject.toml    build metadata, console script entry point
+  CHANGELOG.md      Keep a Changelog history
+  LICENSE           MIT
+```
