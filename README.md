@@ -396,3 +396,16 @@ rotationledger/
   CHANGELOG.md      Keep a Changelog history
   LICENSE           MIT
 ```
+
+## Glossary
+
+| Term          | Meaning in this tool                                              |
+|---------------|-------------------------------------------------------------------|
+| finding       | one credential-shaped match on one line                           |
+| fingerprint   | 12-char truncated SHA-256 of a matched value, its stable identity |
+| lifetime      | the span of one credential from introduction to removal (or HEAD) |
+| introduce     | the first commit where a fingerprint appears in added lines       |
+| rotate/remove | the commit where a live fingerprint appears in deleted lines      |
+| live          | introduced and not removed within the analysed history            |
+| rotated       | introduced and later removed; a closed exposure window            |
+| exposure days | whole days a value was live; a lower bound while still live       |
