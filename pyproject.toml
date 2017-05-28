@@ -7,3 +7,5 @@ name = "rotationledger"
 version = "1.0.0"
 description = "Track the lifetime of leaked secrets through git history and report exposure days."
 readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
