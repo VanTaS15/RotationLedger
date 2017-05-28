@@ -9,3 +9,5 @@ description = "Track the lifetime of leaked secrets through git history and repo
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
+keywords = ["secrets", "git", "entropy", "credentials", "exposure", "rotation"]
+authors = [{ name = "VanTaS15" }]
