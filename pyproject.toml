@@ -11,3 +11,5 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 keywords = ["secrets", "git", "entropy", "credentials", "exposure", "rotation"]
 authors = [{ name = "VanTaS15" }]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
