@@ -13,3 +13,5 @@ keywords = ["secrets", "git", "entropy", "credentials", "exposure", "rotation"]
 authors = [{ name = "VanTaS15" }]
 classifiers = [
   "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Environment :: Console",
