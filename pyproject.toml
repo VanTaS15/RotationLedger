@@ -17,3 +17,5 @@ classifiers = [
   "Environment :: Console",
   "Topic :: Security",
 ]
+dependencies = []
+
