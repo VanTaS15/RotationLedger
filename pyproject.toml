@@ -19,3 +19,5 @@ classifiers = [
 ]
 dependencies = []
 
+[project.scripts]
+rotationledger = "rotationledger.cli:main"
