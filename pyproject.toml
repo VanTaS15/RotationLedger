@@ -21,3 +21,5 @@ dependencies = []
 
 [project.scripts]
 rotationledger = "rotationledger.cli:main"
+
+[project.urls]
