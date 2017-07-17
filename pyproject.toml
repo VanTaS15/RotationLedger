@@ -23,3 +23,5 @@ dependencies = []
 rotationledger = "rotationledger.cli:main"
 
 [project.urls]
+Source = "https://example.invalid/rotationledger"
+
