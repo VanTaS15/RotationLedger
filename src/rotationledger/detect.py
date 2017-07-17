@@ -15,3 +15,9 @@ from dataclasses import dataclass
 
 from .entropy import looks_random, shannon_entropy
 
+# High-entropy generic assignment thresholds. Recorded here so a reader can
+# reproduce every generic finding by hand.
+GENERIC_MIN_LEN = 20
+GENERIC_MIN_ENTROPY = 3.5
+
+
