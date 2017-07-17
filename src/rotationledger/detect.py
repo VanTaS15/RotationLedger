@@ -9,3 +9,9 @@ removed is recognised as one credential, not two.
 
 from __future__ import annotations
 
+import hashlib
+import re
+from dataclasses import dataclass
+
+from .entropy import looks_random, shannon_entropy
+
