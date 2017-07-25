@@ -27,3 +27,9 @@ class Finding:
 
     rule: str
     fingerprint: str
+    value_len: int
+    entropy: float
+
+
+def _fingerprint(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()[:12]
