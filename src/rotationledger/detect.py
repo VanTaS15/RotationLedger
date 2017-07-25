@@ -21,3 +21,9 @@ GENERIC_MIN_LEN = 20
 GENERIC_MIN_ENTROPY = 3.5
 
 
+@dataclass(frozen=True)
+class Finding:
+    """One detected credential-shaped token."""
+
+    rule: str
+    fingerprint: str
