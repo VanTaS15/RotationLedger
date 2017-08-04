@@ -51,3 +51,9 @@ _GENERIC_RE = re.compile(
 )
 
 
+def scan_line(text: str) -> list[Finding]:
+    """Return every credential-shaped finding on one line.
+
+    Structural rules (AWS, private key, bearer, connection string) are checked
+    first. Only if none of them match on a captured region does the generic
+    high-entropy assignment rule apply, which avoids double counting.
