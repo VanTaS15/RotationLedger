@@ -45,3 +45,9 @@ _CONN_STRING_RE = re.compile(
     r"[^\s:/@]+:([^\s:/@]{6,})@[^\s/]+"
 )
 _GENERIC_RE = re.compile(
+    r"(?:secret|token|api[_-]?key|apikey|password|passwd|access[_-]?key)"
+    r"['\"]?\s*[:=]\s*['\"]?([A-Za-z0-9\-._~+/]{%d,})['\"]?" % GENERIC_MIN_LEN,
+    re.IGNORECASE,
+)
+
+
