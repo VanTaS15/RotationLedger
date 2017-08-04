@@ -39,3 +39,9 @@ def _fingerprint(value: str) -> str:
 # so a private key header is never also reported as a generic assignment.
 _AWS_KEY_RE = re.compile(r"\b((?:AKIA|ASIA)[0-9A-Z]{16})\b")
 _PRIVATE_KEY_RE = re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")
+_BEARER_RE = re.compile(r"\bBearer\s+([A-Za-z0-9\-._~+/]{20,}=*)")
+_CONN_STRING_RE = re.compile(
+    r"\b(?:postgres|postgresql|mysql|mongodb(?:\+srv)?|redis|amqp)://"
+    r"[^\s:/@]+:([^\s:/@]{6,})@[^\s/]+"
+)
+_GENERIC_RE = re.compile(
