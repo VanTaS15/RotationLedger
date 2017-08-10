@@ -57,3 +57,9 @@ def scan_line(text: str) -> list[Finding]:
     Structural rules (AWS, private key, bearer, connection string) are checked
     first. Only if none of them match on a captured region does the generic
     high-entropy assignment rule apply, which avoids double counting.
+    """
+
+    findings: list[Finding] = []
+    matched_spans: list[tuple[int, int]] = []
+
+    for m in _AWS_KEY_RE.finditer(text):
