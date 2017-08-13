@@ -186,3 +186,97 @@ This rule is a heuristic, and heuristics are wrong in both directions:
   base64 blob of test data) will be flagged. The rule cannot tell a real API key
   from a random-looking constant; it only measures shape.
 
+Entropy is a proxy for randomness, not a proof of secrecy. Treat generic
+findings as candidates to review, and tune the two thresholds in `detect.py` to
+your codebase rather than assuming the defaults are correct for your data.
+
+## Why fingerprints and not values
+
+RotationLedger never stores or prints a raw secret value. Every finding is keyed
+to a fingerprint, which is a truncated SHA-256 of the matched bytes: the full
+digest computed with `hashlib.sha256`, hex-encoded, then cut to the first 12
+characters (`_fingerprint` in `detect.py`).
+
+That choice does two things. It gives each logical secret a stable identity, so
+the same value added in one commit and deleted in another is recognised as one
+credential rather than two unrelated hits, which is what makes lifetime tracking
+possible at all. And it means the tool's output, its logs, and its reports can
+be committed, shared, or pasted into a ticket without leaking the secret they
+describe. The fingerprint identifies the secret without being the secret. A test
+(`test_fingerprint_never_contains_secret`) asserts the secret string never
+appears inside its own fingerprint.
+
+The truncation to 12 hex characters (48 bits) is a readability tradeoff. It is
+short enough to scan by eye in a report and long enough that an accidental
+collision between two different secrets in one export is very unlikely. It is not
+a security boundary: a fingerprint is a label, not a commitment scheme.
+
+## Output format
+
+Every report is a list of text lines with no trailing whitespace, so runs diff
+cleanly in git. No wall-clock time is ever read; all dates come from the parsed
+commits, which keeps output deterministic.
+
+`scan` prints one line per finding per commit that adds it:
+
+```
+python -m rotationledger scan samples/history.gitlog
+```
+
+```
+3e2f1a0b9c 2026-01-05 aws-access-key 5dacc6454799 config.py len=20 entropy=3.00
+3e2f1a0b9c 2026-01-05 bearer-token 63c44ec215be services/client.py len=38 entropy=4.29
+5c4d3e2f1a 2026-02-14 generic-high-entropy a99fa712c31c settings.py len=51 entropy=4.76
+```
+
+| Field       | Example                | Meaning                                    |
+|-------------|------------------------|--------------------------------------------|
+| short sha   | `3e2f1a0b9c`           | first 10 chars of the commit that added it |
+| date        | `2026-01-05`           | commit date, `YYYY-MM-DD`                  |
+| rule        | `aws-access-key`       | which detection rule matched               |
+| fingerprint | `5dacc6454799`         | 12-char truncated SHA-256 of the value     |
+| path        | `config.py`            | file the added line touched                |
+| `len=`      | `len=20`               | length of the matched value in characters  |
+| `entropy=`  | `entropy=3.00`         | Shannon entropy, bits/char, two decimals   |
+
+`lifetime` prints one line per tracked credential:
+
+```
+python -m rotationledger lifetime samples/history.gitlog
+```
+
+```
+5dacc6454799 aws-access-key introduced=3e2f1a0b9c@2026-01-05 removed=7a2b9c8d1e@2026-03-20 state=rotated exposure_days=74
+63c44ec215be bearer-token introduced=3e2f1a0b9c@2026-01-05 removed=9f3c1a7d24@2026-04-02 state=rotated exposure_days=87
+a99fa712c31c generic-high-entropy introduced=5c4d3e2f1a@2026-02-14 removed=-@- state=live exposure_days=47
+```
+
+| Field            | Meaning                                                     |
+|------------------|-------------------------------------------------------------|
+| fingerprint      | the secret's stable identity                                |
+| rule             | the rule that first matched it                              |
+| `introduced=`    | `sha@date` of the commit that first added the value         |
+| `removed=`       | `sha@date` of the removal, or `-@-` when still live         |
+| `state=`         | `live` or `rotated`                                         |
+| `exposure_days=` | whole days the value was live (see the lower-bound note)    |
+
+`report` is the headline: exposure days, worst window first, with a summary
+footer.
+
+```
+python -m rotationledger report samples/history.gitlog
+```
+
+```
+EXPOSURE DAYS REPORT
+
+  87d  bearer-token           63c44ec215be rotated
+  74d  aws-access-key         5dacc6454799 rotated
+  47d  generic-high-entropy   a99fa712c31c live (open, measured to newest commit)
+
+total=3 live=1 rotated=2 exposure_days_sum=208
+```
+
+The footer counts total findings, splits them into live and rotated, and sums
+the exposure days across all findings. The `(open, measured to newest commit)`
+annotation marks any window that is a lower bound rather than a closed measure.
