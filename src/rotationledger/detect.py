@@ -69,3 +69,9 @@ def scan_line(text: str) -> list[Finding]:
         )
         matched_spans.append(m.span(1))
 
+    if _PRIVATE_KEY_RE.search(text):
+        marker = "-----BEGIN PRIVATE KEY-----"
+        findings.append(
+            Finding("private-key-header", _fingerprint(marker), len(marker), 0.0)
+        )
+
