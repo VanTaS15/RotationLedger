@@ -81,3 +81,9 @@ def scan_line(text: str) -> list[Finding]:
             Finding("bearer-token", _fingerprint(val), len(val), shannon_entropy(val))
         )
         matched_spans.append(m.span(1))
+
+    for m in _CONN_STRING_RE.finditer(text):
+        val = m.group(1)
+        findings.append(
+            Finding(
+                "connection-string", _fingerprint(val), len(val), shannon_entropy(val)
