@@ -63,3 +63,9 @@ def scan_line(text: str) -> list[Finding]:
     matched_spans: list[tuple[int, int]] = []
 
     for m in _AWS_KEY_RE.finditer(text):
+        val = m.group(1)
+        findings.append(
+            Finding("aws-access-key", _fingerprint(val), len(val), shannon_entropy(val))
+        )
+        matched_spans.append(m.span(1))
+
