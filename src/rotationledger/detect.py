@@ -75,3 +75,9 @@ def scan_line(text: str) -> list[Finding]:
             Finding("private-key-header", _fingerprint(marker), len(marker), 0.0)
         )
 
+    for m in _BEARER_RE.finditer(text):
+        val = m.group(1)
+        findings.append(
+            Finding("bearer-token", _fingerprint(val), len(val), shannon_entropy(val))
+        )
+        matched_spans.append(m.span(1))
