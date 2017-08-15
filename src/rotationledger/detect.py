@@ -87,3 +87,9 @@ def scan_line(text: str) -> list[Finding]:
         findings.append(
             Finding(
                 "connection-string", _fingerprint(val), len(val), shannon_entropy(val)
+            )
+        )
+        matched_spans.append(m.span(1))
+
+    for m in _GENERIC_RE.finditer(text):
+        val = m.group(1)
