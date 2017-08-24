@@ -5,3 +5,8 @@ token looks like random key material rather than ordinary source text. Nothing
 here touches the network or the clock, so the results are fully deterministic.
 """
 
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass
+
