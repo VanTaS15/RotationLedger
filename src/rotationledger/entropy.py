@@ -10,3 +10,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
+
+@dataclass(frozen=True)
+class CharClasses:
+    """Which character families a token draws from."""
