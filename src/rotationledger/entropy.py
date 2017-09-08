@@ -14,3 +14,8 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class CharClasses:
     """Which character families a token draws from."""
+
+    lower: bool
+    upper: bool
+    digit: bool
+    symbol: bool
