@@ -1,0 +1,15 @@
+import unittest
+
+from rotationledger.detect import scan_line
+
+
+class TestDetect(unittest.TestCase):
+    def test_aws_access_key(self):
+        findings = scan_line('AWS_ACCESS_KEY_ID = "AKIAEXAMPLE00000FAKE"')
+        rules = [f.rule for f in findings]
+        self.assertIn("aws-access-key", rules)
+
+    def test_private_key_header(self):
+        findings = scan_line("-----BEGIN RSA PRIVATE KEY-----")
+        self.assertEqual([f.rule for f in findings], ["private-key-header"])
+
