@@ -17,3 +17,22 @@ def _fmt_date(dt) -> str:
 
 
 def scan_report(commits: list[Commit]) -> list[str]:
+    """Raw hit list: one line per finding per commit that adds it."""
+
+    lines: list[str] = []
+    for commit in commits:
+        for dl in commit.added:
+            for f in scan_line(dl.text):
+                lines.append(
+                    f"{commit.short} {_fmt_date(commit.date)} "
+                    f"{f.rule} {f.fingerprint} {dl.path} "
+                    f"len={f.value_len} entropy={f.entropy:.2f}"
+                )
+    lines.sort()
+    return lines
+
+
+def lifetime_report(lifetimes: list[Lifetime]) -> list[str]:
+    """One line per credential lifetime, with the exposure window."""
+
+    lines: list[str] = []
