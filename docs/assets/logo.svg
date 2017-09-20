@@ -3,3 +3,14 @@
   Palette reason: same subject as the tool, credential lifetimes. Teal
   (#2f6f6a) marks the "rotation" morpheme and the rotate endpoint; amber
   (#b3541e) is the single accent marking the introduce endpoint, the moment a
+  secret first leaks. Ink (#1b2733) is a neutral for the wordmark. The mark is a
+  literal diagram of the core data structure: one lifetime segment with an
+  introduce point on the left and a rotate point on the right. Geometry uses
+  whole and half pixels, one stroke width per role.
+-->
+<title id="title">rotationledger</title>
+<desc id="desc">Wordmark for rotationledger. The compound name is split by colour at the rotation and ledger boundary. Above it, a single lifetime segment runs from an introduce point to a rotate point.</desc>
+<rect x="0" y="0" width="240" height="240" fill="#ffffff"/>
+
+<!-- lifetime segment mark: introduce point (amber) to rotate point (teal) -->
+<line x1="56" y1="96" x2="184" y2="96" stroke="#1b2733" stroke-width="3" stroke-linecap="round"/>
