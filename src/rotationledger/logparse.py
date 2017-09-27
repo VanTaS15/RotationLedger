@@ -31,3 +31,70 @@ HUNK_RE = re.compile(r"^@@ .*@@")
 
 @dataclass
 class DiffLine:
+    """A single added or removed line within a commit."""
+
+    path: str
+    kind: str  # "add" or "del"
+    text: str
+
+
+@dataclass
+class Commit:
+    """One commit from the log export."""
+
+    sha: str
+    author: str
+    date: datetime
+    subject: str
+    added: list[DiffLine] = field(default_factory=list)
+    removed: list[DiffLine] = field(default_factory=list)
+
+    @property
+    def short(self) -> str:
+        return self.sha[:10]
+
+
+def _parse_git_date(raw: str) -> datetime:
+    """Parse the date formats git prints.
+
+    Handles the ISO form ``2026-01-05 09:14:00 +0000`` and the default form
+    ``Mon Jan 5 09:14:00 2026 +0000``. Falls back to a fixed epoch only if both
+    fail, keeping the parser total.
+    """
+
+    raw = raw.strip()
+    iso = re.match(
+        r"^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}:\d{2})\s*([+-]\d{4})?$", raw
+    )
+    if iso:
+        base = f"{iso.group(1)} {iso.group(2)}"
+        dt = datetime.strptime(base, "%Y-%m-%d %H:%M:%S")
+        tz = iso.group(3)
+        if tz:
+            hours, minutes = int(tz[1:3]), int(tz[3:5])
+            if hours > 23 or minutes > 59:
+                raise LogParseError(f"invalid UTC offset in timestamp {raw!r}")
+            offset = (hours * 60 + minutes) * (1 if tz[0] == "+" else -1)
+            dt = dt.replace(tzinfo=timezone(timedelta(minutes=offset)))
+            return dt.astimezone(timezone.utc)
+        return dt.replace(tzinfo=timezone.utc)
+    for fmt in ("%a %b %d %H:%M:%S %Y %z", "%a %b %d %H:%M:%S %Y"):
+        try:
+            dt = datetime.strptime(raw, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.astimezone(timezone.utc)
+        except ValueError:
+            continue
+    if not raw.strip():
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    raise LogParseError(f"unparsable date: {raw!r}")
+
+
+def parse_log(text: str) -> list[Commit]:
+    """Parse the full export text into a list of commits, newest first.
+
+    Git prints newest commit first, and this function preserves that order.
+    """
+
+    commits: list[Commit] = []
