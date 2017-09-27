@@ -53,30 +53,3 @@ _GENERIC_RE = re.compile(
 
 def scan_line(text: str) -> list[Finding]:
     """Return every credential-shaped finding on one line.
-
-    Structural rules (AWS, private key, bearer, connection string) are checked
-    first. Only if none of them match on a captured region does the generic
-    high-entropy assignment rule apply, which avoids double counting.
-    """
-
-    findings: list[Finding] = []
-    matched_spans: list[tuple[int, int]] = []
-
-    for m in _AWS_KEY_RE.finditer(text):
-        val = m.group(1)
-        findings.append(
-            Finding("aws-access-key", _fingerprint(val), len(val), shannon_entropy(val))
-        )
-        matched_spans.append(m.span(1))
-
-    if _PRIVATE_KEY_RE.search(text):
-        marker = "-----BEGIN PRIVATE KEY-----"
-        findings.append(
-            Finding("private-key-header", _fingerprint(marker), len(marker), 0.0)
-        )
-
-    for m in _BEARER_RE.finditer(text):
-        val = m.group(1)
-        findings.append(
-            Finding("bearer-token", _fingerprint(val), len(val), shannon_entropy(val))
-        )
