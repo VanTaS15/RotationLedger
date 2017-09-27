@@ -25,3 +25,30 @@ diff --git a/config.py b/config.py
 --- a/config.py
 +++ b/config.py
 @@ -1,2 +1,1 @@
+ import os
+-KEY = "AKIAEXAMPLE00000FAKE"
+"""
+
+
+class TestLogParse(unittest.TestCase):
+    def test_parses_two_commits(self):
+        commits = parse_log(LOG)
+        self.assertEqual(len(commits), 2)
+
+    def test_newest_first_order_preserved(self):
+        commits = parse_log(LOG)
+        self.assertTrue(commits[0].sha.startswith("1111111"))
+        self.assertTrue(commits[1].sha.startswith("7777777"))
+
+    def test_subject_captured(self):
+        commits = parse_log(LOG)
+        self.assertEqual(commits[0].subject, "init commit")
+
+    def test_date_parsed_iso(self):
+        commits = parse_log(LOG)
+        self.assertEqual(commits[0].date.year, 2026)
+        self.assertEqual(commits[0].date.month, 1)
+
+    def test_added_and_removed_lines(self):
+        commits = parse_log(LOG)
+        added_texts = [d.text for d in commits[0].added]
