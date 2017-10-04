@@ -19,3 +19,8 @@ class CharClasses:
     upper: bool
     digit: bool
     symbol: bool
+
+    @property
+    def count(self) -> int:
+        return sum((self.lower, self.upper, self.digit, self.symbol))
+
