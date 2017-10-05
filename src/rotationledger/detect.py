@@ -25,31 +25,3 @@ GENERIC_MIN_ENTROPY = 3.5
 class Finding:
     """One detected credential-shaped token."""
 
-    rule: str
-    fingerprint: str
-    value_len: int
-    entropy: float
-
-
-def _fingerprint(value: str) -> str:
-    return hashlib.sha256(value.encode("utf-8")).hexdigest()[:12]
-
-
-# Ordered named rules. The first structural rule that matches wins for a line,
-# so a private key header is never also reported as a generic assignment.
-_AWS_KEY_RE = re.compile(r"\b((?:AKIA|ASIA)[0-9A-Z]{16})\b")
-_PRIVATE_KEY_RE = re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")
-_BEARER_RE = re.compile(r"\bBearer\s+([A-Za-z0-9\-._~+/]{20,}=*)")
-_CONN_STRING_RE = re.compile(
-    r"\b(?:postgres|postgresql|mysql|mongodb(?:\+srv)?|redis|amqp)://"
-    r"[^\s:/@]+:([^\s:/@]{6,})@[^\s/]+"
-)
-_GENERIC_RE = re.compile(
-    r"(?:secret|token|api[_-]?key|apikey|password|passwd|access[_-]?key)"
-    r"['\"]?\s*[:=]\s*['\"]?([A-Za-z0-9\-._~+/]{%d,})['\"]?" % GENERIC_MIN_LEN,
-    re.IGNORECASE,
-)
-
-
-def scan_line(text: str) -> list[Finding]:
-    """Return every credential-shaped finding on one line.

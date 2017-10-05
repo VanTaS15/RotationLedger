@@ -13,3 +13,19 @@ class TestDetect(unittest.TestCase):
         findings = scan_line("-----BEGIN RSA PRIVATE KEY-----")
         self.assertEqual([f.rule for f in findings], ["private-key-header"])
 
+    def test_bearer_token(self):
+        findings = scan_line('Authorization: Bearer abcDEF123456ghiJKL7890mnoPQR')
+        self.assertIn("bearer-token", [f.rule for f in findings])
+
+    def test_connection_string(self):
+        findings = scan_line("postgres://user:s3cretPass99@db.example.invalid/app")
+        self.assertIn("connection-string", [f.rule for f in findings])
+
+    def test_generic_high_entropy(self):
+        line = 'api_key = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"'
+        self.assertIn("generic-high-entropy", [f.rule for f in scan_line(line)])
+
+    def test_generic_low_entropy_rejected(self):
+        line = 'password = "aaaaaaaaaaaaaaaaaaaaaaaa"'
+        self.assertEqual(scan_line(line), [])
+
