@@ -37,3 +37,8 @@ def shannon_entropy(text: str) -> float:
         return 0.0
     counts: dict[str, int] = {}
     for ch in text:
+        counts[ch] = counts.get(ch, 0) + 1
+    length = len(text)
+    total = 0.0
+    for n in counts.values():
+        p = n / length
