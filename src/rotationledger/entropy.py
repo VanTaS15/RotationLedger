@@ -24,3 +24,7 @@ class CharClasses:
     def count(self) -> int:
         return sum((self.lower, self.upper, self.digit, self.symbol))
 
+
+def shannon_entropy(text: str) -> float:
+    """Return the Shannon entropy of ``text`` in bits per character.
+
