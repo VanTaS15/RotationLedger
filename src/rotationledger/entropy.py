@@ -28,3 +28,8 @@ class CharClasses:
 def shannon_entropy(text: str) -> float:
     """Return the Shannon entropy of ``text`` in bits per character.
 
+    An empty string has zero entropy. A string of one repeated character also
+    has zero entropy. A perfectly uniform string over N symbols approaches
+    log2(N).
+    """
+
