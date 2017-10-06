@@ -33,3 +33,7 @@ def shannon_entropy(text: str) -> float:
     log2(N).
     """
 
+    if not text:
+        return 0.0
+    counts: dict[str, int] = {}
+    for ch in text:
