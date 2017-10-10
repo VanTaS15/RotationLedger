@@ -57,3 +57,33 @@ class Lifetime:
     def state(self) -> str:
         return "live" if self.still_live else "rotated"
 
+
+def _findings_by_fingerprint(lines) -> dict[str, str]:
+    """Map fingerprint -> rule name for a set of diff lines."""
+
+    out: dict[str, str] = {}
+    for dl in lines:
+        for f in scan_line(dl.text):
+            out.setdefault(f.fingerprint, f.rule)
+    return out
+
+
+def reconstruct(commits: list[Commit]) -> list[Lifetime]:
+    """Build lifetimes from commits.
+
+    ``commits`` is expected newest-first (as git prints). The walk runs oldest
+    first so introduction precedes removal in time.
+    """
+
+    if not commits:
+        return []
+
+    oldest_first = list(reversed(commits))
+    head_date = oldest_first[-1].date
+
+    # fingerprint -> currently open Lifetime, if any.
+    open_life: dict[str, Lifetime] = {}
+    lifetimes: list[Lifetime] = []
+
+    for commit in oldest_first:
+        added = _findings_by_fingerprint(commit.added)

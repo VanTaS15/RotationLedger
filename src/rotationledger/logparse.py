@@ -98,3 +98,37 @@ def parse_log(text: str) -> list[Commit]:
     """
 
     commits: list[Commit] = []
+    current: Commit | None = None
+    current_file: str | None = None
+    subject_pending = False
+
+    for line in text.splitlines():
+        m = COMMIT_RE.match(line)
+        if m:
+            if current is not None:
+                commits.append(current)
+            current = Commit(
+                sha=m.group(1), author="", date=_parse_git_date(""), subject=""
+            )
+            current_file = None
+            subject_pending = False
+            continue
+
+        if current is None:
+            continue
+
+        am = AUTHOR_RE.match(line)
+        if am:
+            current.author = am.group(1).strip()
+            continue
+
+        dm = DATE_RE.match(line)
+        if dm:
+            current.date = _parse_git_date(dm.group(1))
+            subject_pending = True
+            continue
+
+        dg = DIFF_GIT_RE.match(line)
+        if dg:
+            current_file = dg.group(2)
+            subject_pending = False
