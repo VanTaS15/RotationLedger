@@ -42,3 +42,7 @@ def shannon_entropy(text: str) -> float:
     total = 0.0
     for n in counts.values():
         p = n / length
+        total -= p * math.log2(p)
+    return total
+
+
