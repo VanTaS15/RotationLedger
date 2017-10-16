@@ -60,3 +60,8 @@ def classify(text: str) -> CharClasses:
         else:
             symbol = True
     return CharClasses(lower=lower, upper=upper, digit=digit, symbol=symbol)
+
+
+def looks_random(text: str, min_len: int = 20, min_entropy: float = 3.5) -> bool:
+    """Heuristic gate for a high-entropy secret candidate.
+
