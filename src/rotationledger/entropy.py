@@ -46,3 +46,8 @@ def shannon_entropy(text: str) -> float:
     return total
 
 
+def classify(text: str) -> CharClasses:
+    """Report which character classes appear in ``text``."""
+
+    lower = upper = digit = symbol = False
+    for ch in text:
