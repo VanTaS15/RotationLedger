@@ -56,3 +56,7 @@ def classify(text: str) -> CharClasses:
         elif ch.isupper():
             upper = True
         elif ch.isdigit():
+            digit = True
+        else:
+            symbol = True
+    return CharClasses(lower=lower, upper=upper, digit=digit, symbol=symbol)
