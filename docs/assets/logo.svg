@@ -8,3 +8,14 @@
   introduce point on the left and a rotate point on the right. Geometry uses
   whole and half pixels, one stroke width per role.
 -->
+<title id="title">rotationledger</title>
+<desc id="desc">Wordmark for rotationledger. The compound name is split by colour at the rotation and ledger boundary. Above it, a single lifetime segment runs from an introduce point to a rotate point.</desc>
+<rect x="0" y="0" width="240" height="240" fill="#ffffff"/>
+
+<!-- lifetime segment mark: introduce point (amber) to rotate point (teal) -->
+<line x1="56" y1="96" x2="184" y2="96" stroke="#1b2733" stroke-width="3" stroke-linecap="round"/>
+<circle cx="56" cy="96" r="10" fill="#b3541e"/>
+<circle cx="184" cy="96" r="10" fill="#2f6f6a"/>
+<text x="56" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">introduce</text>
+<text x="184" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">rotate</text>
+
