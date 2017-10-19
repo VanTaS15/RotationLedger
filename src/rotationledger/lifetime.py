@@ -1,0 +1,11 @@
+"""Reconstruct each secret's lifetime from parsed commits.
+
+For every distinct credential fingerprint the state machine walks the commit
+history from oldest to newest and records:
+
+- introduced_at: the commit and date where the secret was first added
+- removed_at: the commit and date where the secret line was deleted, if any
+- still_live: whether the secret is present in the tree at HEAD
+- exposure_days: the window in days the secret was live
+
+A secret can be removed and then re-added; this is modelled as separate
