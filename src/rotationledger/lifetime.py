@@ -28,3 +28,9 @@ class Lifetime:
     """The tracked life of one credential occurrence."""
 
     fingerprint: str
+    rule: str
+    introduced_sha: str
+    introduced_at: datetime
+    removed_sha: str | None = None
+    removed_at: datetime | None = None
+    still_live: bool = True
