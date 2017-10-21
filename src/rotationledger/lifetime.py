@@ -9,3 +9,9 @@ history from oldest to newest and records:
 - exposure_days: the window in days the secret was live
 
 A secret can be removed and then re-added; this is modelled as separate
+lifetimes so a rotation that reuses a value is not silently merged. State
+transitions are: absent -> live (introduce), live -> removed (rotate/remove).
+The headline number the report cares about is exposure_days.
+"""
+
+from __future__ import annotations
