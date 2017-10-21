@@ -22,3 +22,9 @@ from datetime import datetime
 from .detect import scan_line
 from .logparse import Commit
 
+
+@dataclass
+class Lifetime:
+    """The tracked life of one credential occurrence."""
+
+    fingerprint: str
