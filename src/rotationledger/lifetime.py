@@ -15,3 +15,10 @@ The headline number the report cares about is exposure_days.
 """
 
 from __future__ import annotations
+
+from dataclasses import dataclass, field
+from datetime import datetime
+
+from .detect import scan_line
+from .logparse import Commit
+
