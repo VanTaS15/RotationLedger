@@ -46,3 +46,9 @@ class Lifetime:
 
         end = self.removed_at if self.removed_at is not None else self._head_date
         if end is None:
+            return 0
+        delta = end - self.introduced_at
+        return max(delta.days, 0)
+
+    # Set by the reconstructor for still-live secrets.
+    _head_date: datetime | None = field(default=None, repr=False)
