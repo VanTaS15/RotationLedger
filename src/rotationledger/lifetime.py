@@ -40,3 +40,9 @@ class Lifetime:
         """Whole days between introduction and removal.
 
         For a still-live secret this is measured against the newest commit in
+        the analysed history, since the tool is offline and has no later
+        reference point. The report labels this case as open ended.
+        """
+
+        end = self.removed_at if self.removed_at is not None else self._head_date
+        if end is None:
