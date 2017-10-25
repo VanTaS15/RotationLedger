@@ -34,3 +34,9 @@ class Lifetime:
     removed_sha: str | None = None
     removed_at: datetime | None = None
     still_live: bool = True
+
+    @property
+    def exposure_days(self) -> int:
+        """Whole days between introduction and removal.
+
+        For a still-live secret this is measured against the newest commit in
