@@ -10,3 +10,27 @@
   analysed history, 2026-01-05 to 2026-04-02.
 -->
 <title id="title">rotationledger exposure timeline</title>
+<desc id="desc">Horizontal bars showing days each secret stayed live in git history. bearer-token 87 days rotated, aws-access-key 74 days rotated, generic-high-entropy 47 days still live. Dates run from 2026-01-05 to 2026-04-02.</desc>
+<rect x="0" y="0" width="900" height="300" fill="#ffffff"/>
+<text x="24" y="34" fill="#1b2733" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="bold">Secret exposure windows (days live in history)</text>
+<text x="24" y="54" fill="#5b6670" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="12">source: rotationledger report samples/history.gitlog</text>
+
+<!-- date axis ticks: Jan 05 = day 0, Apr 02 = day 87 -->
+<line x1="110" y1="80" x2="110" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="342.8" y1="80" x2="342.8" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="584.1" y1="80" x2="584.1" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="851.4" y1="80" x2="851.4" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<text x="110" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-01-05</text>
+<text x="342.8" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-02-01</text>
+<text x="584.1" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-03-01</text>
+<text x="851.4" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-04-01</text>
+
+<!-- bearer-token: day 0 to 87, rotated -->
+<text x="24" y="106" fill="#1b2733" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11">bearer</text>
+<rect x="110" y="94" width="750" height="20" rx="3" fill="#2f6f6a"/>
+<text x="852" y="108" fill="#ffffff" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="end">87d rotated</text>
+
+<!-- aws-access-key: day 0 to 74, rotated -->
+<text x="24" y="146" fill="#1b2733" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11">aws</text>
+<rect x="110" y="134" width="637.9" height="20" rx="3" fill="#2f6f6a"/>
+<text x="739.9" y="148" fill="#ffffff" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="end">74d rotated</text>
