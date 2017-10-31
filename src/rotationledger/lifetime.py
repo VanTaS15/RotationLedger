@@ -64,3 +64,9 @@ def _findings_by_fingerprint(lines) -> dict[str, str]:
     out: dict[str, str] = {}
     for dl in lines:
         for f in scan_line(dl.text):
+            out.setdefault(f.fingerprint, f.rule)
+    return out
+
+
+def reconstruct(commits: list[Commit]) -> list[Lifetime]:
+    """Build lifetimes from commits.
