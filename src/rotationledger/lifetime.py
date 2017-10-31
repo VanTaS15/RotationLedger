@@ -52,3 +52,9 @@ class Lifetime:
 
     # Set by the reconstructor for still-live secrets.
     _head_date: datetime | None = field(default=None, repr=False)
+
+    @property
+    def state(self) -> str:
+        return "live" if self.still_live else "rotated"
+
+
