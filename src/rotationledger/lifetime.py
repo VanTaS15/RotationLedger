@@ -70,3 +70,9 @@ def _findings_by_fingerprint(lines) -> dict[str, str]:
 
 def reconstruct(commits: list[Commit]) -> list[Lifetime]:
     """Build lifetimes from commits.
+
+    ``commits`` is expected newest-first (as git prints). The walk runs oldest
+    first so introduction precedes removal in time.
+    """
+
+    if not commits:
