@@ -76,3 +76,10 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
     """
 
     if not commits:
+        return []
+
+    oldest_first = list(reversed(commits))
+    head_date = oldest_first[-1].date
+
+    # fingerprint -> currently open Lifetime, if any.
+    open_life: dict[str, Lifetime] = {}
