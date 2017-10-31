@@ -58,3 +58,9 @@ class Lifetime:
         return "live" if self.still_live else "rotated"
 
 
+def _findings_by_fingerprint(lines) -> dict[str, str]:
+    """Map fingerprint -> rule name for a set of diff lines."""
+
+    out: dict[str, str] = {}
+    for dl in lines:
+        for f in scan_line(dl.text):
