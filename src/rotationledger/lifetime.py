@@ -83,3 +83,9 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
 
     # fingerprint -> currently open Lifetime, if any.
     open_life: dict[str, Lifetime] = {}
+    lifetimes: list[Lifetime] = []
+
+    for commit in oldest_first:
+        added = _findings_by_fingerprint(commit.added)
+        removed = _findings_by_fingerprint(commit.removed)
+
