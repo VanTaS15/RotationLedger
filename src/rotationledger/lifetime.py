@@ -89,3 +89,9 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
         added = _findings_by_fingerprint(commit.added)
         removed = _findings_by_fingerprint(commit.removed)
 
+        # Removals first: a line changed in one commit shows as del then add,
+        # but for distinct fingerprints order does not matter within a commit.
+        for fp, _rule in removed.items():
+            life = open_life.get(fp)
+            if life is not None and fp not in added:
+                life.removed_sha = commit.short
