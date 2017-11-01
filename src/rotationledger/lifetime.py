@@ -95,3 +95,9 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
             life = open_life.get(fp)
             if life is not None and fp not in added:
                 life.removed_sha = commit.short
+                life.removed_at = commit.date
+                life.still_live = False
+                lifetimes.append(life)
+                del open_life[fp]
+
+        for fp, rule in added.items():
