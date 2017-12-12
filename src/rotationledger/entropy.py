@@ -13,19 +13,3 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class CharClasses:
-    """Which character families a token draws from."""
-
-    lower: bool
-    upper: bool
-    digit: bool
-    symbol: bool
-
-    @property
-    def count(self) -> int:
-        return sum((self.lower, self.upper, self.digit, self.symbol))
-
-
-def shannon_entropy(text: str) -> float:
-    """Return the Shannon entropy of ``text`` in bits per character.
-
-    An empty string has zero entropy. A string of one repeated character also
