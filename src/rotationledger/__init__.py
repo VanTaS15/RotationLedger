@@ -7,3 +7,6 @@ stayed exposed, where it was removed or rotated, and whether it is still present
 at HEAD. The headline artifact is an exposure-days report.
 
 Standard library only, Python 3.11+, no network access.
+"""
+
+from __future__ import annotations
