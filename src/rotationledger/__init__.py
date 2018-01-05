@@ -10,3 +10,6 @@ Standard library only, Python 3.11+, no network access.
 """
 
 from __future__ import annotations
+
+from .detect import Finding, scan_line
+from .entropy import CharClasses, classify, looks_random, shannon_entropy
