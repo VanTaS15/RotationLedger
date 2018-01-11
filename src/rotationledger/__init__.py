@@ -13,3 +13,6 @@ from __future__ import annotations
 
 from .detect import Finding, scan_line
 from .entropy import CharClasses, classify, looks_random, shannon_entropy
+from .lifetime import Lifetime, reconstruct
+from .logparse import Commit, DiffLine, parse_log
+
