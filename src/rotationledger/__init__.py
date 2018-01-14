@@ -22,3 +22,6 @@ __all__ = [
     "CharClasses",
     "classify",
     "looks_random",
+    "shannon_entropy",
+    "Lifetime",
+    "reconstruct",
