@@ -19,3 +19,6 @@ from .logparse import Commit, DiffLine, parse_log
 __all__ = [
     "Finding",
     "scan_line",
+    "CharClasses",
+    "classify",
+    "looks_random",
