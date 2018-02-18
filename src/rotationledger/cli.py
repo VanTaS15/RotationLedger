@@ -7,3 +7,10 @@ Subcommands:
   version   print the package version
 
 Exit codes: 0 clean (no findings), 1 findings present, 2 usage error.
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+
