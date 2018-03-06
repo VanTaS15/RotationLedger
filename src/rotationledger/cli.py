@@ -42,3 +42,10 @@ def cmd_lifetime(args: argparse.Namespace) -> int:
     lifetimes = reconstruct(commits)
     _emit(lifetime_report(lifetimes))
     return 1 if lifetimes else 0
+
+
+def cmd_report(args: argparse.Namespace) -> int:
+    commits = parse_log(_read(args.logfile))
+    lifetimes = reconstruct(commits)
+    _emit(exposure_days_report(lifetimes))
+    return 1 if lifetimes else 0
