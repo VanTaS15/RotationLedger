@@ -65,3 +65,13 @@ def classify(text: str) -> CharClasses:
 def looks_random(text: str, min_len: int = 20, min_entropy: float = 3.5) -> bool:
     """Heuristic gate for a high-entropy secret candidate.
 
+    A token is treated as random-looking when it is long enough, mixes at least
+    two character classes, and has entropy at or above ``min_entropy`` bits per
+    character. The defaults are tuned for base64 and hex secrets in
+    ``detect.py`` and are recorded there so results stay reproducible.
+    """
+
+    if len(text) < min_len:
+        return False
+    if classify(text).count < 2:
+        return False
