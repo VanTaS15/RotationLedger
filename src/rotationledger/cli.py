@@ -28,3 +28,10 @@ def _read(path: str) -> str:
 def _emit(lines: list[str]) -> None:
     for line in lines:
         print(line)
+
+
+def cmd_scan(args: argparse.Namespace) -> int:
+    commits = parse_log(_read(args.logfile))
+    lines = scan_report(commits)
+    _emit(lines)
+    return 1 if lines else 0
