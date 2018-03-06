@@ -35,3 +35,10 @@ def cmd_scan(args: argparse.Namespace) -> int:
     lines = scan_report(commits)
     _emit(lines)
     return 1 if lines else 0
+
+
+def cmd_lifetime(args: argparse.Namespace) -> int:
+    commits = parse_log(_read(args.logfile))
+    lifetimes = reconstruct(commits)
+    _emit(lifetime_report(lifetimes))
+    return 1 if lifetimes else 0
