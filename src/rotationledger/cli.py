@@ -57,3 +57,10 @@ def cmd_version(_args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="rotationledger",
+        description="Track the lifetime of leaked secrets through git history.",
+    )
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p_scan = sub.add_parser("scan", help="list every credential-shaped finding")
