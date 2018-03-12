@@ -49,3 +49,11 @@ def cmd_report(args: argparse.Namespace) -> int:
     lifetimes = reconstruct(commits)
     _emit(exposure_days_report(lifetimes))
     return 1 if lifetimes else 0
+
+
+def cmd_version(_args: argparse.Namespace) -> int:
+    print(f"rotationledger {__version__}")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
