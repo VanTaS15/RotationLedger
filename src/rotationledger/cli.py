@@ -64,3 +64,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_scan = sub.add_parser("scan", help="list every credential-shaped finding")
+    p_scan.add_argument("logfile", help="path to a git log -p export")
+    p_scan.set_defaults(func=cmd_scan)
+
+    p_life = sub.add_parser("lifetime", help="reconstruct secret lifetimes")
+    p_life.add_argument("logfile", help="path to a git log -p export")
+    p_life.set_defaults(func=cmd_lifetime)
+
