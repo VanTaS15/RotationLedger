@@ -71,3 +71,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_life.add_argument("logfile", help="path to a git log -p export")
     p_life.set_defaults(func=cmd_lifetime)
 
+    p_report = sub.add_parser("report", help="exposure-days report")
+    p_report.add_argument("logfile", help="path to a git log -p export")
+    p_report.set_defaults(func=cmd_report)
+
+    p_version = sub.add_parser("version", help="print the version")
+    p_version.set_defaults(func=cmd_version)
+
