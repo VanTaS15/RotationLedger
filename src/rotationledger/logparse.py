@@ -13,3 +13,14 @@ model the full diff grammar.
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+
+
+COMMIT_RE = re.compile(r"^commit ([0-9a-f]{7,40})\b")
+AUTHOR_RE = re.compile(r"^Author:\s*(.*)$")
+DATE_RE = re.compile(r"^Date:\s*(.*)$")
+DIFF_GIT_RE = re.compile(r"^diff --git a/(.+?) b/(.+?)\s*$")
+PLUS_FILE_RE = re.compile(r"^\+\+\+ b/(.+?)\s*$")
+HUNK_RE = re.compile(r"^@@ .*@@")
+
