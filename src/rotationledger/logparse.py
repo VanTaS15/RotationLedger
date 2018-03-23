@@ -24,3 +24,14 @@ DIFF_GIT_RE = re.compile(r"^diff --git a/(.+?) b/(.+?)\s*$")
 PLUS_FILE_RE = re.compile(r"^\+\+\+ b/(.+?)\s*$")
 HUNK_RE = re.compile(r"^@@ .*@@")
 
+
+@dataclass
+class DiffLine:
+    """A single added or removed line within a commit."""
+
+    path: str
+    kind: str  # "add" or "del"
+    text: str
+
+
+@dataclass
