@@ -35,3 +35,14 @@ class DiffLine:
 
 
 @dataclass
+class Commit:
+    """One commit from the log export."""
+
+    sha: str
+    author: str
+    date: datetime
+    subject: str
+    added: list[DiffLine] = field(default_factory=list)
+    removed: list[DiffLine] = field(default_factory=list)
+
+    @property
