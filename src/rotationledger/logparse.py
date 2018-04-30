@@ -57,3 +57,14 @@ def _parse_git_date(raw: str) -> datetime:
     ``Mon Jan 5 09:14:00 2026 +0000``. Falls back to a fixed epoch only if both
     fail, keeping the parser total.
     """
+
+    raw = raw.strip()
+    iso = re.match(
+        r"^(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2}:\d{2})\s*([+-]\d{4})?$", raw
+    )
+    if iso:
+        base = f"{iso.group(1)} {iso.group(2)}"
+        dt = datetime.strptime(base, "%Y-%m-%d %H:%M:%S")
+        tz = iso.group(3)
+        if tz:
+            offset = int(tz[:3]) * 60 + int(tz[0] + tz[3:])
