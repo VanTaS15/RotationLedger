@@ -46,3 +46,14 @@ class Commit:
     removed: list[DiffLine] = field(default_factory=list)
 
     @property
+    def short(self) -> str:
+        return self.sha[:10]
+
+
+def _parse_git_date(raw: str) -> datetime:
+    """Parse the date formats git prints.
+
+    Handles the ISO form ``2026-01-05 09:14:00 +0000`` and the default form
+    ``Mon Jan 5 09:14:00 2026 +0000``. Falls back to a fixed epoch only if both
+    fail, keeping the parser total.
+    """
