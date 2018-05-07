@@ -68,3 +68,14 @@ def _parse_git_date(raw: str) -> datetime:
         tz = iso.group(3)
         if tz:
             offset = int(tz[:3]) * 60 + int(tz[0] + tz[3:])
+            dt = dt.replace(tzinfo=timezone.utc)
+            return dt
+        return dt.replace(tzinfo=timezone.utc)
+    for fmt in ("%a %b %d %H:%M:%S %Y %z", "%a %b %d %H:%M:%S %Y"):
+        try:
+            dt = datetime.strptime(raw, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.astimezone(timezone.utc)
+        except ValueError:
+            continue
