@@ -79,3 +79,13 @@ def _parse_git_date(raw: str) -> datetime:
             return dt.astimezone(timezone.utc)
         except ValueError:
             continue
+    return datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+
+def parse_log(text: str) -> list[Commit]:
+    """Parse the full export text into a list of commits, newest first.
+
+    Git prints newest commit first, and this function preserves that order.
+    """
+
+    commits: list[Commit] = []
