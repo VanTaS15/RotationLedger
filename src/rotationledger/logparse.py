@@ -111,3 +111,14 @@ def parse_log(text: str) -> list[Commit]:
         am = AUTHOR_RE.match(line)
         if am:
             current.author = am.group(1).strip()
+            continue
+
+        dm = DATE_RE.match(line)
+        if dm:
+            current.date = _parse_git_date(dm.group(1))
+            subject_pending = True
+            continue
+
+        dg = DIFF_GIT_RE.match(line)
+        if dg:
+            current_file = dg.group(2)
