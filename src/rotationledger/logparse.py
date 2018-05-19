@@ -122,3 +122,14 @@ def parse_log(text: str) -> list[Commit]:
         dg = DIFF_GIT_RE.match(line)
         if dg:
             current_file = dg.group(2)
+            subject_pending = False
+            continue
+
+        pf = PLUS_FILE_RE.match(line)
+        if pf:
+            current_file = pf.group(1)
+            continue
+
+        if HUNK_RE.match(line):
+            subject_pending = False
+            continue
