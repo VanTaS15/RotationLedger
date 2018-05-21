@@ -11,3 +11,9 @@ from .detect import scan_line
 from .lifetime import Lifetime
 from .logparse import Commit
 
+
+def _fmt_date(dt) -> str:
+    return dt.strftime("%Y-%m-%d")
+
+
+def scan_report(commits: list[Commit]) -> list[str]:
