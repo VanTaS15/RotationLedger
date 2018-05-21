@@ -22,3 +22,9 @@ def scan_report(commits: list[Commit]) -> list[str]:
     lines: list[str] = []
     for commit in commits:
         for dl in commit.added:
+            for f in scan_line(dl.text):
+                lines.append(
+                    f"{commit.short} {_fmt_date(commit.date)} "
+                    f"{f.rule} {f.fingerprint} {dl.path} "
+                    f"len={f.value_len} entropy={f.entropy:.2f}"
+                )
