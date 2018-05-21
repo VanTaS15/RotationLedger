@@ -28,3 +28,9 @@ def scan_report(commits: list[Commit]) -> list[str]:
                     f"{f.rule} {f.fingerprint} {dl.path} "
                     f"len={f.value_len} entropy={f.entropy:.2f}"
                 )
+    lines.sort()
+    return lines
+
+
+def lifetime_report(lifetimes: list[Lifetime]) -> list[str]:
+    """One line per credential lifetime, with the exposure window."""
