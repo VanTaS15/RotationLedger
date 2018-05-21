@@ -17,3 +17,8 @@ def _fmt_date(dt) -> str:
 
 
 def scan_report(commits: list[Commit]) -> list[str]:
+    """Raw hit list: one line per finding per commit that adds it."""
+
+    lines: list[str] = []
+    for commit in commits:
+        for dl in commit.added:
