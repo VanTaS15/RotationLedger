@@ -51,3 +51,9 @@ def lifetime_report(lifetimes: list[Lifetime]) -> list[str]:
 def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
     """Headline artifact: exposure days, worst first, with a summary footer."""
 
+    ordered = sorted(
+        lifetimes, key=lambda l: (-l.exposure_days, l.fingerprint)
+    )
+    lines: list[str] = ["EXPOSURE DAYS REPORT", ""]
+    if not ordered:
+        lines.append("no credentials detected")
