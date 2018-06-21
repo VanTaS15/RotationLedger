@@ -34,3 +34,9 @@ def scan_report(commits: list[Commit]) -> list[str]:
 
 def lifetime_report(lifetimes: list[Lifetime]) -> list[str]:
     """One line per credential lifetime, with the exposure window."""
+
+    lines: list[str] = []
+    for life in lifetimes:
+        removed = life.removed_sha if life.removed_sha else "-"
+        removed_date = _fmt_date(life.removed_at) if life.removed_at else "-"
+        lines.append(
