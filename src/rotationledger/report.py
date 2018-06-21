@@ -45,3 +45,9 @@ def lifetime_report(lifetimes: list[Lifetime]) -> list[str]:
             f"removed={removed}@{removed_date} "
             f"state={life.state} exposure_days={life.exposure_days}"
         )
+    return lines
+
+
+def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
+    """Headline artifact: exposure days, worst first, with a summary footer."""
+
