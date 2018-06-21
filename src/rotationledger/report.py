@@ -57,3 +57,9 @@ def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
     lines: list[str] = ["EXPOSURE DAYS REPORT", ""]
     if not ordered:
         lines.append("no credentials detected")
+        return lines
+
+    for life in ordered:
+        tail = " (open, measured to newest commit)" if life.still_live else ""
+        lines.append(
+            f"{life.exposure_days:>4}d  {life.rule:<22} {life.fingerprint} "
