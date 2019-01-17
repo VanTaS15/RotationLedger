@@ -10,3 +10,7 @@ class TestDetect(unittest.TestCase):
         self.assertIn("aws-access-key", rules)
 
     def test_private_key_header(self):
+        findings = scan_line("-----BEGIN RSA PRIVATE KEY-----")
+        self.assertEqual([f.rule for f in findings], ["private-key-header"])
+
+    def test_bearer_token(self):
