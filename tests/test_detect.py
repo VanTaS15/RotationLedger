@@ -14,3 +14,7 @@ class TestDetect(unittest.TestCase):
         self.assertEqual([f.rule for f in findings], ["private-key-header"])
 
     def test_bearer_token(self):
+        findings = scan_line('Authorization: Bearer abcDEF123456ghiJKL7890mnoPQR')
+        self.assertIn("bearer-token", [f.rule for f in findings])
+
+    def test_connection_string(self):
