@@ -18,3 +18,6 @@ class TestDetect(unittest.TestCase):
         self.assertIn("bearer-token", [f.rule for f in findings])
 
     def test_connection_string(self):
+        findings = scan_line("postgres://user:s3cretPass99@db.example.invalid/app")
+        self.assertIn("connection-string", [f.rule for f in findings])
+
