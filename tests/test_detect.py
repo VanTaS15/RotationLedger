@@ -29,3 +29,7 @@ class TestDetect(unittest.TestCase):
         line = 'password = "aaaaaaaaaaaaaaaaaaaaaaaa"'
         self.assertEqual(scan_line(line), [])
 
+    def test_plain_prose_has_no_findings(self):
+        self.assertEqual(scan_line("this is an ordinary sentence in a diff"), [])
+
+    def test_fingerprint_is_stable(self):
