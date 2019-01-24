@@ -33,3 +33,7 @@ class TestDetect(unittest.TestCase):
         self.assertEqual(scan_line("this is an ordinary sentence in a diff"), [])
 
     def test_fingerprint_is_stable(self):
+        a = scan_line('token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"')[0]
+        b = scan_line('token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"')[0]
+        self.assertEqual(a.fingerprint, b.fingerprint)
+
