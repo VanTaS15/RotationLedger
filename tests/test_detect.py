@@ -21,3 +21,7 @@ class TestDetect(unittest.TestCase):
         findings = scan_line("postgres://user:s3cretPass99@db.example.invalid/app")
         self.assertIn("connection-string", [f.rule for f in findings])
 
+    def test_generic_high_entropy(self):
+        line = 'api_key = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"'
+        self.assertIn("generic-high-entropy", [f.rule for f in scan_line(line)])
+
