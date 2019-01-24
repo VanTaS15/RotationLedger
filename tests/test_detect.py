@@ -25,3 +25,7 @@ class TestDetect(unittest.TestCase):
         line = 'api_key = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"'
         self.assertIn("generic-high-entropy", [f.rule for f in scan_line(line)])
 
+    def test_generic_low_entropy_rejected(self):
+        line = 'password = "aaaaaaaaaaaaaaaaaaaaaaaa"'
+        self.assertEqual(scan_line(line), [])
+
