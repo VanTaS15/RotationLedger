@@ -8,3 +8,6 @@ class TestEntropy(unittest.TestCase):
         self.assertEqual(shannon_entropy(""), 0.0)
 
     def test_single_repeated_char_is_zero(self):
+        self.assertEqual(shannon_entropy("aaaaaa"), 0.0)
+
+    def test_uniform_two_symbols_is_one_bit(self):
