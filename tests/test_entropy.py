@@ -11,3 +11,6 @@ class TestEntropy(unittest.TestCase):
         self.assertEqual(shannon_entropy("aaaaaa"), 0.0)
 
     def test_uniform_two_symbols_is_one_bit(self):
+        self.assertAlmostEqual(shannon_entropy("abab"), 1.0, places=9)
+
+    def test_uniform_four_symbols_is_two_bits(self):
