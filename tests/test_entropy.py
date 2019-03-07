@@ -14,3 +14,7 @@ class TestEntropy(unittest.TestCase):
         self.assertAlmostEqual(shannon_entropy("abab"), 1.0, places=9)
 
     def test_uniform_four_symbols_is_two_bits(self):
+        self.assertAlmostEqual(shannon_entropy("abcd"), 2.0, places=9)
+
+    def test_classify_counts_families(self):
+        c = classify("aB3$")
