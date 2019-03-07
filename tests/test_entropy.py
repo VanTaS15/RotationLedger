@@ -18,3 +18,6 @@ class TestEntropy(unittest.TestCase):
 
     def test_classify_counts_families(self):
         c = classify("aB3$")
+        self.assertTrue(c.lower and c.upper and c.digit and c.symbol)
+        self.assertEqual(c.count, 4)
+
