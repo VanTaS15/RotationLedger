@@ -21,3 +21,6 @@ class TestEntropy(unittest.TestCase):
         self.assertTrue(c.lower and c.upper and c.digit and c.symbol)
         self.assertEqual(c.count, 4)
 
+    def test_looks_random_rejects_short(self):
+        self.assertFalse(looks_random("aB3xY", min_len=20))
+
