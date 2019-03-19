@@ -24,3 +24,6 @@ class TestEntropy(unittest.TestCase):
     def test_looks_random_rejects_short(self):
         self.assertFalse(looks_random("aB3xY", min_len=20))
 
+    def test_looks_random_rejects_low_entropy(self):
+        self.assertFalse(looks_random("aaaaaaaaaaaaaaaaaaaaaaaa"))
+
