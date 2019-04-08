@@ -17,3 +17,8 @@ def load_sample():
 
 class TestLifetime(unittest.TestCase):
     def test_three_credentials_tracked(self):
+        self.assertEqual(len(load_sample()), 3)
+
+    def test_one_still_live(self):
+        live = [l for l in load_sample() if l.still_live]
+        self.assertEqual(len(live), 1)
