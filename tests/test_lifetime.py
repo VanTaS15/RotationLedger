@@ -13,3 +13,7 @@ SAMPLE = os.path.join(
 def load_sample():
     with open(SAMPLE, "r", encoding="utf-8") as fh:
         return reconstruct(parse_log(fh.read()))
+
+
+class TestLifetime(unittest.TestCase):
+    def test_three_credentials_tracked(self):
