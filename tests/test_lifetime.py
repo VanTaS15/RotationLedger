@@ -41,3 +41,7 @@ class TestLifetime(unittest.TestCase):
 
     def test_reports_are_line_lists(self):
         lifetimes = load_sample()
+        self.assertTrue(all(isinstance(x, str) for x in lifetime_report(lifetimes)))
+        self.assertTrue(
+            all(isinstance(x, str) for x in exposure_days_report(lifetimes))
+        )
