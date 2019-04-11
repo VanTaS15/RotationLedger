@@ -27,3 +27,7 @@ class TestLifetime(unittest.TestCase):
     def test_two_rotated(self):
         rotated = [l for l in load_sample() if not l.still_live]
         self.assertEqual(len(rotated), 2)
+
+    def test_aws_key_exposure_window(self):
+        # Introduced 2026-01-05, removed 2026-03-20 => 74 days.
+        aws = [l for l in load_sample() if l.rule == "aws-access-key"][0]
