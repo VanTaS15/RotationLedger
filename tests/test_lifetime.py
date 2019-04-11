@@ -22,3 +22,8 @@ class TestLifetime(unittest.TestCase):
     def test_one_still_live(self):
         live = [l for l in load_sample() if l.still_live]
         self.assertEqual(len(live), 1)
+        self.assertEqual(live[0].rule, "generic-high-entropy")
+
+    def test_two_rotated(self):
+        rotated = [l for l in load_sample() if not l.still_live]
+        self.assertEqual(len(rotated), 2)
