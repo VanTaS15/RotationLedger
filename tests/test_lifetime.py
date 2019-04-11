@@ -36,3 +36,8 @@ class TestLifetime(unittest.TestCase):
 
     def test_bearer_exposure_window(self):
         # Introduced 2026-01-05, removed 2026-04-02 => 87 days.
+        bearer = [l for l in load_sample() if l.rule == "bearer-token"][0]
+        self.assertEqual(bearer.exposure_days, 87)
+
+    def test_reports_are_line_lists(self):
+        lifetimes = load_sample()
