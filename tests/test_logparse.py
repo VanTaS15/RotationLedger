@@ -10,3 +10,8 @@ Date:   2026-01-05 09:14:00 +0000
 
 diff --git a/config.py b/config.py
 --- /dev/null
++++ b/config.py
+@@ -0,0 +1,2 @@
++import os
++KEY = "AKIAEXAMPLE00000FAKE"
+
