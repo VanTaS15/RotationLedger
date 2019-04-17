@@ -21,3 +21,9 @@ Date:   2026-02-10 12:00:00 +0000
 
     remove key
 
+diff --git a/config.py b/config.py
+--- a/config.py
++++ b/config.py
+@@ -1,2 +1,1 @@
+ import os
+-KEY = "AKIAEXAMPLE00000FAKE"
