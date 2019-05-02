@@ -27,3 +27,8 @@ diff --git a/config.py b/config.py
 @@ -1,2 +1,1 @@
  import os
 -KEY = "AKIAEXAMPLE00000FAKE"
+"""
+
+
+class TestLogParse(unittest.TestCase):
+    def test_parses_two_commits(self):
