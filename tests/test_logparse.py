@@ -32,3 +32,9 @@ diff --git a/config.py b/config.py
 
 class TestLogParse(unittest.TestCase):
     def test_parses_two_commits(self):
+        commits = parse_log(LOG)
+        self.assertEqual(len(commits), 2)
+
+    def test_newest_first_order_preserved(self):
+        commits = parse_log(LOG)
+        self.assertTrue(commits[0].sha.startswith("1111111"))
