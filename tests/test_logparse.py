@@ -43,3 +43,9 @@ class TestLogParse(unittest.TestCase):
     def test_subject_captured(self):
         commits = parse_log(LOG)
         self.assertEqual(commits[0].subject, "init commit")
+
+    def test_date_parsed_iso(self):
+        commits = parse_log(LOG)
+        self.assertEqual(commits[0].date.year, 2026)
+        self.assertEqual(commits[0].date.month, 1)
+
