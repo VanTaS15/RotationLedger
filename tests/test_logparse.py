@@ -49,3 +49,8 @@ class TestLogParse(unittest.TestCase):
         self.assertEqual(commits[0].date.year, 2026)
         self.assertEqual(commits[0].date.month, 1)
 
+    def test_added_and_removed_lines(self):
+        commits = parse_log(LOG)
+        added_texts = [d.text for d in commits[0].added]
+        self.assertIn('KEY = "AKIAEXAMPLE00000FAKE"', added_texts)
+        removed_texts = [d.text for d in commits[1].removed]
