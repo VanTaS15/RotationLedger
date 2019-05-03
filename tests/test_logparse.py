@@ -38,3 +38,8 @@ class TestLogParse(unittest.TestCase):
     def test_newest_first_order_preserved(self):
         commits = parse_log(LOG)
         self.assertTrue(commits[0].sha.startswith("1111111"))
+        self.assertTrue(commits[1].sha.startswith("7777777"))
+
+    def test_subject_captured(self):
+        commits = parse_log(LOG)
+        self.assertEqual(commits[0].subject, "init commit")
