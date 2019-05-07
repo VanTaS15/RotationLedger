@@ -41,3 +41,19 @@ BANNED_MARKETING = (
     "effortless", "effortlessly", "unleash", "unlock the power",
     "leverage synergies", "best-in-class", "best in class",
 )
+
+# The em dash in all three of its disguises (Lesson 1). The two HTML forms are
+# assembled from parts so this source file does not itself contain the literal
+# strings it searches for, which would make the check flag its own text.
+EM_DASH_FORMS = (
+    "\u2014",
+    "&#" + "8212;",
+    "&m" + "dash;",
+)
+
+# Text file extensions to scan for the em dash. Byte-for-byte, no rendering.
+TEXT_SUFFIXES = {
+    ".py", ".md", ".txt", ".svg", ".toml", ".cff", ".yml", ".yaml",
+    ".cfg", ".ini", ".gitignore", ".gitattributes", ".editorconfig",
+    ".gitlog", "",
+}
