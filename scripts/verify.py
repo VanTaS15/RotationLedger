@@ -25,3 +25,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "docs" / "assets"
 README = ROOT / "README.md"
+
+SVG_NS = "{http://www.w3.org/2000/svg}"
+
+# Banned filter primitives (decoration, not information; Lesson 9).
+BANNED_FILTERS = ("feGaussianBlur", "feDropShadow", "feTurbulence")
+
+# Marketing terms a technical README should not lean on. Kept small and
+# specific so the check does not fire on ordinary prose.
+BANNED_MARKETING = (
+    "blazing", "blazingly", "seamless", "seamlessly", "cutting-edge",
+    "cutting edge", "state-of-the-art", "state of the art", "revolutionary",
+    "game-changing", "game changing", "world-class", "world class",
+    "next-generation", "next generation", "supercharge", "turbocharge",
+    "effortless", "effortlessly", "unleash", "unlock the power",
+    "leverage synergies", "best-in-class", "best in class",
+)
