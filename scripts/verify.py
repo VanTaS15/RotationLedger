@@ -57,3 +57,19 @@ TEXT_SUFFIXES = {
     ".cfg", ".ini", ".gitignore", ".gitattributes", ".editorconfig",
     ".gitlog", "",
 }
+
+SKIP_DIRS = {".git", "__pycache__", ".pytest_cache", "build", "dist"}
+
+
+def _iter_files() -> list[Path]:
+    out: list[Path] = []
+    for path in ROOT.rglob("*"):
+        if not path.is_file():
+            continue
+        if any(part in SKIP_DIRS for part in path.parts):
+            continue
+        if path.name.endswith(".egg-info"):
+            continue
+        out.append(path)
+    return out
+
