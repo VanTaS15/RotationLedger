@@ -73,3 +73,19 @@ def _iter_files() -> list[Path]:
         out.append(path)
     return out
 
+
+def _svgs() -> list[Path]:
+    if not ASSETS.is_dir():
+        return []
+    return sorted(ASSETS.rglob("*.svg"))
+
+
+def _is_text(path: Path) -> bool:
+    return path.suffix.lower() in TEXT_SUFFIXES or path.name.startswith(".")
+
+
+# --- Check 1: every SVG parses as XML ---------------------------------------
+def check_svg_parses() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        try:
