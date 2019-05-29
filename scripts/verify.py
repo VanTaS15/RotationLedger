@@ -89,3 +89,19 @@ def check_svg_parses() -> tuple[bool, str]:
     failures: list[str] = []
     for svg in _svgs():
         try:
+            ET.parse(svg)
+        except ET.ParseError as exc:
+            failures.append(f"{svg.relative_to(ROOT)}: {exc}")
+    if failures:
+        return False, "svg parses as XML: " + "; ".join(failures)
+    return True, f"svg parses as XML: {len(_svgs())} file(s) ok"
+
+
+# --- Check 2: no banned filter primitives -----------------------------------
+def check_no_banned_filters() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        text = svg.read_text(encoding="utf-8")
+        for term in BANNED_FILTERS:
+            if term in text:
+                failures.append(f"{svg.relative_to(ROOT)}: {term}")
