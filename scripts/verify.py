@@ -105,3 +105,19 @@ def check_no_banned_filters() -> tuple[bool, str]:
         for term in BANNED_FILTERS:
             if term in text:
                 failures.append(f"{svg.relative_to(ROOT)}: {term}")
+    if failures:
+        return False, "no banned filters: " + "; ".join(failures)
+    return True, "no banned filters: none present"
+
+
+# --- Check 3: no illegal -- inside an XML comment ---------------------------
+def check_no_double_hyphen_comment() -> tuple[bool, str]:
+    comment_re = re.compile(r"<!--(.*?)-->", re.DOTALL)
+    failures: list[str] = []
+    for svg in _svgs():
+        text = svg.read_text(encoding="utf-8")
+        for body in comment_re.findall(text):
+            if "--" in body:
+                failures.append(str(svg.relative_to(ROOT)))
+                break
+    if failures:
