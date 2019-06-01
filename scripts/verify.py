@@ -121,3 +121,19 @@ def check_no_double_hyphen_comment() -> tuple[bool, str]:
                 failures.append(str(svg.relative_to(ROOT)))
                 break
     if failures:
+        return False, "no -- in XML comments: " + "; ".join(failures)
+    return True, "no -- in XML comments: clean"
+
+
+# --- Check 4: no em dash in any tracked text file ---------------------------
+def check_no_em_dash() -> tuple[bool, str]:
+    failures: list[str] = []
+    for path in _iter_files():
+        if not _is_text(path):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for form in EM_DASH_FORMS:
+            if form in text:
