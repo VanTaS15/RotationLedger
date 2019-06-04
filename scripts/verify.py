@@ -137,3 +137,19 @@ def check_no_em_dash() -> tuple[bool, str]:
             continue
         for form in EM_DASH_FORMS:
             if form in text:
+                failures.append(f"{path.relative_to(ROOT)}: {form!r}")
+    if failures:
+        return False, "no em dash (U+2014/&#8212;/&mdash;): " + "; ".join(failures)
+    return True, "no em dash (U+2014/&#8212;/&mdash;): clean"
+
+
+# --- Check 5: no pandoc image attribute block in README ---------------------
+def check_no_pandoc_image_attr() -> tuple[bool, str]:
+    if not README.is_file():
+        return True, "no pandoc image attr in README: README absent"
+    text = README.read_text(encoding="utf-8")
+    # Match ){ ... width|height ... } as in ![alt](path){width=200}.
+    pat = re.compile(r"\)\{[^}]*(?:width|height)[^}]*\}")
+    if pat.search(text):
+        return False, "no pandoc image attr in README: found ){...width/height...}"
+    return True, "no pandoc image attr in README: clean"
