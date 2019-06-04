@@ -153,3 +153,19 @@ def check_no_pandoc_image_attr() -> tuple[bool, str]:
     if pat.search(text):
         return False, "no pandoc image attr in README: found ){...width/height...}"
     return True, "no pandoc image attr in README: clean"
+
+
+# --- Check 6: no banned marketing terms in README ---------------------------
+def check_no_marketing() -> tuple[bool, str]:
+    if not README.is_file():
+        return True, "no marketing terms in README: README absent"
+    text = README.read_text(encoding="utf-8").lower()
+    hits = [t for t in BANNED_MARKETING if t in text]
+    if hits:
+        return False, "no marketing terms in README: " + ", ".join(hits)
+    return True, "no marketing terms in README: clean"
+
+
+# --- Check 7: every SVG has viewBox, role=img, title, desc ------------------
+def check_svg_accessibility() -> tuple[bool, str]:
+    failures: list[str] = []
