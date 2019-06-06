@@ -185,3 +185,19 @@ def check_svg_accessibility() -> tuple[bool, str]:
         if root.find(f"{SVG_NS}desc") is None:
             missing.append("<desc>")
         if missing:
+            failures.append(f"{svg.relative_to(ROOT)}: {', '.join(missing)}")
+    if failures:
+        return False, "svg accessibility: " + "; ".join(failures)
+    return True, f"svg accessibility: {len(_svgs())} file(s) ok"
+
+
+# --- Check 8: no two labels on the same baseline overlap --------------------
+def _char_width_em(font_family: str) -> float:
+    fam = (font_family or "").lower()
+    mono_hints = ("mono", "consolas", "courier", "cascadia", "jetbrains")
+    return 0.60 if any(h in fam for h in mono_hints) else 0.58
+
+
+def _text_extent(elem, x: float, size: float, anchor: str) -> tuple[float, float]:
+    content = "".join(elem.itertext())
+    width = len(content) * _char_width_em(elem.get("font-family", "")) * size
