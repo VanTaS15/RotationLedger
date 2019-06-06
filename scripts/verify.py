@@ -169,3 +169,19 @@ def check_no_marketing() -> tuple[bool, str]:
 # --- Check 7: every SVG has viewBox, role=img, title, desc ------------------
 def check_svg_accessibility() -> tuple[bool, str]:
     failures: list[str] = []
+    for svg in _svgs():
+        try:
+            root = ET.parse(svg).getroot()
+        except ET.ParseError:
+            failures.append(f"{svg.relative_to(ROOT)}: unparseable")
+            continue
+        missing: list[str] = []
+        if not root.get("viewBox"):
+            missing.append("viewBox")
+        if root.get("role") != "img":
+            missing.append('role="img"')
+        if root.find(f"{SVG_NS}title") is None:
+            missing.append("<title>")
+        if root.find(f"{SVG_NS}desc") is None:
+            missing.append("<desc>")
+        if missing:
