@@ -217,3 +217,20 @@ def check_no_label_overlap() -> tuple[bool, str]:
             continue
         rows: dict[int, list[tuple[float, float, str]]] = {}
         for text_el in root.iter(f"{SVG_NS}text"):
+            x_raw = text_el.get("x")
+            y_raw = text_el.get("y")
+            if x_raw is None or y_raw is None:
+                continue
+            try:
+                x = float(x_raw)
+                y = float(y_raw)
+                size = float(text_el.get("font-size", "12"))
+            except ValueError:
+                continue
+            anchor = text_el.get("text-anchor", "start")
+            left, right = _text_extent(text_el, x, size, anchor)
+            label = "".join(text_el.itertext()).strip()
+            rows.setdefault(round(y), []).append((left, right, label))
+        for y, items in rows.items():
+            items.sort(key=lambda t: t[0])
+            for i in range(1, len(items)):
