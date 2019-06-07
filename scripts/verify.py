@@ -201,3 +201,19 @@ def _char_width_em(font_family: str) -> float:
 def _text_extent(elem, x: float, size: float, anchor: str) -> tuple[float, float]:
     content = "".join(elem.itertext())
     width = len(content) * _char_width_em(elem.get("font-family", "")) * size
+    if anchor == "middle":
+        return x - width / 2.0, x + width / 2.0
+    if anchor == "end":
+        return x - width, x
+    return x, x + width
+
+
+def check_no_label_overlap() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        try:
+            root = ET.parse(svg).getroot()
+        except ET.ParseError:
+            continue
+        rows: dict[int, list[tuple[float, float, str]]] = {}
+        for text_el in root.iter(f"{SVG_NS}text"):
