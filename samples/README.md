@@ -1,0 +1,4 @@
+# Sample fixtures
+
+## history.gitlog
+
