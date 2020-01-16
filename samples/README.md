@@ -20,3 +20,8 @@ values authenticate against any real system:
   words EXAMPLE and FAKE. Real AWS key ids are 20 characters of uppercase and
   digits after the AKIA prefix and never spell words.
 - `Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE` is a placeholder bearer token
+  that again spells EXAMPLE and fake.
+- `sk-live-EXAMPLE9d4f7b2a6c8e1f3a5b7d9e0c2f4a6b8dFAKE` is a placeholder that
+  uses the common `sk-live-` prefix but is padded with the words EXAMPLE and
+  FAKE.
+
