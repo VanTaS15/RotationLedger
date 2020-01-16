@@ -25,3 +25,9 @@ values authenticate against any real system:
   uses the common `sk-live-` prefix but is padded with the words EXAMPLE and
   FAKE.
 
+### Commit timeline
+
+The export contains four commits, printed newest first as git does:
+
+| commit    | date       | event                                              |
+|-----------|------------|----------------------------------------------------|
