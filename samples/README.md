@@ -31,3 +31,9 @@ The export contains four commits, printed newest first as git does:
 
 | commit    | date       | event                                              |
 |-----------|------------|----------------------------------------------------|
+| 9f3c1a7d  | 2026-04-02 | removes the bearer token, reads from env at runtime |
+| 7a2b9c8d  | 2026-03-20 | rotates the leaked AWS access key to an env lookup  |
+| 5c4d3e2f  | 2026-02-14 | adds a still-live generic analytics api key         |
+| 3e2f1a0b  | 2026-01-05 | initial commit that plants the AWS key and bearer   |
+
+### Expected lifetimes
