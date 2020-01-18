@@ -1,0 +1,8 @@
+commit 9f3c1a7d24e5b6c7d8e9f0a1b2c3d4e5f6a7b8c9
+Author: Dana Reyes <dana@example.invalid>
+Date:   2026-04-02 11:20:00 +0000
+
+    chore: drop hardcoded bearer token, read from vault at runtime
+
+diff --git a/services/client.py b/services/client.py
+index 1111111..2222222 100644
