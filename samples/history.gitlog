@@ -15,3 +15,13 @@ index 1111111..2222222 100644
          self.timeout = 30
 
 commit 7a2b9c8d1e0f3a4b5c6d7e8f9a0b1c2d3e4f5a6b
+Author: Dana Reyes <dana@example.invalid>
+Date:   2026-03-20 16:45:00 +0000
+
+    security: rotate leaked AWS access key to environment lookup
+
+diff --git a/config.py b/config.py
+index 3333333..4444444 100644
+--- a/config.py
++++ b/config.py
+@@ -1,6 +1,6 @@
