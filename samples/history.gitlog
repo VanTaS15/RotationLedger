@@ -25,3 +25,13 @@ index 3333333..4444444 100644
 --- a/config.py
 +++ b/config.py
 @@ -1,6 +1,6 @@
+ import os
+
+-AWS_ACCESS_KEY_ID = "AKIAEXAMPLE00000FAKE"
++AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+ REGION = "us-east-1"
+
+commit 5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d
+Author: Priya Nair <priya@example.invalid>
+Date:   2026-02-14 09:05:00 +0000
+
