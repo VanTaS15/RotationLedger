@@ -35,3 +35,12 @@ commit 5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d
 Author: Priya Nair <priya@example.invalid>
 Date:   2026-02-14 09:05:00 +0000
 
+    feat: add analytics upload with service api key
+
+diff --git a/settings.py b/settings.py
+index 5555555..6666666 100644
+--- a/settings.py
++++ b/settings.py
+@@ -3,3 +3,4 @@ DEBUG = False
+
+ ANALYTICS_ENABLED = True
