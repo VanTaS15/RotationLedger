@@ -44,3 +44,13 @@ index 5555555..6666666 100644
 @@ -3,3 +3,4 @@ DEBUG = False
 
  ANALYTICS_ENABLED = True
++ANALYTICS_API_KEY = "sk-live-EXAMPLE9d4f7b2a6c8e1f3a5b7d9e0c2f4a6b8dFAKE"
+
+commit 3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f
+Author: Priya Nair <priya@example.invalid>
+Date:   2026-01-05 09:14:00 +0000
+
+    init: bootstrap service config and client
+
+diff --git a/config.py b/config.py
+new file mode 100644
