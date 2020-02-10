@@ -54,3 +54,12 @@ Date:   2026-01-05 09:14:00 +0000
 
 diff --git a/config.py b/config.py
 new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/config.py
+@@ -0,0 +1,5 @@
++import os
++
++AWS_ACCESS_KEY_ID = "AKIAEXAMPLE00000FAKE"
++REGION = "us-east-1"
++ENDPOINT = "https://api.example.invalid"
