@@ -93,3 +93,17 @@ def scan_line(text: str) -> list[Finding]:
 
     for m in _GENERIC_RE.finditer(text):
         val = m.group(1)
+        span = m.span(1)
+        if any(span[0] < e and s < span[1] for s, e in matched_spans):
+            continue
+        if not looks_random(val, GENERIC_MIN_LEN, GENERIC_MIN_ENTROPY):
+            continue
+        findings.append(
+            Finding(
+                "generic-high-entropy",
+                _fingerprint(val),
+                len(val),
+                shannon_entropy(val),
+            )
+        )
+
