@@ -2,3 +2,8 @@
 <!--
   Palette reason: the subject is credential exposure over time. Two core colours
   encode secret state: teal (#2f6f6a) for a secret that was rotated and is no
+  longer live, and one accent, burnt amber (#b3541e), used exactly once for the
+  single still-live secret, which is the thing to read first. Neutrals (ink
+  #1b2733, grey #5b6670, hairline #c3c9cf) do not count toward the budget.
+  Every number here comes from: rotationledger report samples/history.gitlog
+  (bearer 87d rotated, aws 74d rotated, generic 47d live). Dates span the
