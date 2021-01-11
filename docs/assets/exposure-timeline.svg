@@ -7,3 +7,7 @@
   #1b2733, grey #5b6670, hairline #c3c9cf) do not count toward the budget.
   Every number here comes from: rotationledger report samples/history.gitlog
   (bearer 87d rotated, aws 74d rotated, generic 47d live). Dates span the
+  analysed history, 2026-01-05 to 2026-04-02.
+-->
+<title id="title">rotationledger exposure timeline</title>
+<desc id="desc">Horizontal bars showing days each secret stayed live in git history. bearer-token 87 days rotated, aws-access-key 74 days rotated, generic-high-entropy 47 days still live. Dates run from 2026-01-05 to 2026-04-02.</desc>
