@@ -15,3 +15,8 @@
 <text x="24" y="34" fill="#1b2733" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="bold">Secret exposure windows (days live in history)</text>
 <text x="24" y="54" fill="#5b6670" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="12">source: rotationledger report samples/history.gitlog</text>
 
+<!-- date axis ticks: Jan 05 = day 0, Apr 02 = day 87 -->
+<line x1="110" y1="80" x2="110" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="342.8" y1="80" x2="342.8" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="584.1" y1="80" x2="584.1" y2="248" stroke="#c3c9cf" stroke-width="1"/>
+<line x1="851.4" y1="80" x2="851.4" y2="248" stroke="#c3c9cf" stroke-width="1"/>
