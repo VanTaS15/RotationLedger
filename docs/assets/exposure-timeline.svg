@@ -24,3 +24,8 @@
 <text x="342.8" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-02-01</text>
 <text x="584.1" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-03-01</text>
 <text x="851.4" y="270" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">2026-04-01</text>
+
+<!-- bearer-token: day 0 to 87, rotated -->
+<text x="24" y="106" fill="#1b2733" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11">bearer</text>
+<rect x="110" y="94" width="750" height="20" rx="3" fill="#2f6f6a"/>
+<text x="852" y="108" fill="#ffffff" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="end">87d rotated</text>
