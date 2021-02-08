@@ -3,3 +3,7 @@
   Palette reason: same subject as the tool, credential lifetimes. Teal
   (#2f6f6a) marks the "rotation" morpheme and the rotate endpoint; amber
   (#b3541e) is the single accent marking the introduce endpoint, the moment a
+  secret first leaks. Ink (#1b2733) is a neutral for the wordmark. The mark is a
+  literal diagram of the core data structure: one lifetime segment with an
+  introduce point on the left and a rotate point on the right. Geometry uses
+  whole and half pixels, one stroke width per role.
