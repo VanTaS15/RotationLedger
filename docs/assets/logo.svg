@@ -7,3 +7,6 @@
   literal diagram of the core data structure: one lifetime segment with an
   introduce point on the left and a rotate point on the right. Geometry uses
   whole and half pixels, one stroke width per role.
+-->
+<title id="title">rotationledger</title>
+<desc id="desc">Wordmark for rotationledger. The compound name is split by colour at the rotation and ledger boundary. Above it, a single lifetime segment runs from an introduce point to a rotate point.</desc>
