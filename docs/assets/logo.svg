@@ -16,3 +16,6 @@
 <line x1="56" y1="96" x2="184" y2="96" stroke="#1b2733" stroke-width="3" stroke-linecap="round"/>
 <circle cx="56" cy="96" r="10" fill="#b3541e"/>
 <circle cx="184" cy="96" r="10" fill="#2f6f6a"/>
+<text x="56" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">introduce</text>
+<text x="184" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">rotate</text>
+
