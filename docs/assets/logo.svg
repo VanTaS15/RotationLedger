@@ -13,3 +13,6 @@
 <rect x="0" y="0" width="240" height="240" fill="#ffffff"/>
 
 <!-- lifetime segment mark: introduce point (amber) to rotate point (teal) -->
+<line x1="56" y1="96" x2="184" y2="96" stroke="#1b2733" stroke-width="3" stroke-linecap="round"/>
+<circle cx="56" cy="96" r="10" fill="#b3541e"/>
+<circle cx="184" cy="96" r="10" fill="#2f6f6a"/>
