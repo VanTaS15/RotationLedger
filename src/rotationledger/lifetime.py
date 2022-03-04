@@ -101,3 +101,18 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
                 del open_life[fp]
 
         for fp, rule in added.items():
+            if fp in open_life:
+                continue
+            open_life[fp] = Lifetime(
+                fingerprint=fp,
+                rule=rule,
+                introduced_sha=commit.short,
+                introduced_at=commit.date,
+            )
+
+    for life in open_life.values():
+        life.still_live = True
+        life._head_date = head_date
+        lifetimes.append(life)
+
+    lifetimes.sort(key=lambda l: (l.introduced_at, l.fingerprint))
