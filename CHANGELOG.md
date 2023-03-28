@@ -20,4 +20,4 @@ Keep a Changelog, and this project uses semantic versioning.
   two rotated synthetic credentials.
 - `docs/assets/logo.svg` and `docs/assets/exposure-timeline.svg`.
 
-<!-- draft note 702 -->
+<!-- draft note 703 -->
