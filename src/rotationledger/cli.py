@@ -78,3 +78,17 @@ def build_parser() -> argparse.ArgumentParser:
     p_version = sub.add_parser("version", help="print the version")
     p_version.set_defaults(func=cmd_version)
 
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    try:
+        return args.func(args)
+    except FileNotFoundError as exc:
+        print(f"error: cannot read {exc.filename}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
