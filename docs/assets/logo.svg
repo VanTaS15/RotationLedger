@@ -19,3 +19,9 @@
 <text x="56" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">introduce</text>
 <text x="184" y="128" fill="#5b6670" font-family="&quot;Cascadia Mono&quot;, &quot;JetBrains Mono&quot;, Consolas, &quot;DejaVu Sans Mono&quot;, monospace" font-size="11" text-anchor="middle">rotate</text>
 
+<!-- wordmark with colour split at the morpheme boundary -->
+<text x="120" y="172" text-anchor="middle" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="26" font-weight="bold">
+<tspan fill="#2f6f6a">rotation</tspan><tspan fill="#1b2733">ledger</tspan>
+</text>
+<text x="120" y="196" text-anchor="middle" fill="#5b6670" font-family="-apple-system, &quot;Segoe UI&quot;, Roboto, Helvetica, Arial, sans-serif" font-size="12">secret lifetime through git history</text>
+</svg>
