@@ -63,3 +63,20 @@ index 0000000..3333333
 +AWS_ACCESS_KEY_ID = "AKIAEXAMPLE00000FAKE"
 +REGION = "us-east-1"
 +ENDPOINT = "https://api.example.invalid"
+diff --git a/services/client.py b/services/client.py
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/services/client.py
+@@ -0,0 +1,10 @@
++import os
++
++
++class ApiClient:
++
++    def __init__(self):
++        self.auth_header = "Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE"
++        self.timeout = 30
++
++    def send(self, payload):
++        return payload
