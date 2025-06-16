@@ -37,3 +37,13 @@ The export contains four commits, printed newest first as git does:
 | 3e2f1a0b  | 2026-01-05 | initial commit that plants the AWS key and bearer   |
 
 ### Expected lifetimes
+
+Produced by `rotationledger lifetime samples/history.gitlog` and checked in
+`tests/test_lifetime.py`:
+
+- aws-access-key: introduced 2026-01-05, rotated 2026-03-20, exposure 74 days.
+- bearer-token: introduced 2026-01-05, rotated 2026-04-02, exposure 87 days.
+- generic-high-entropy: introduced 2026-02-14, still live at HEAD, exposure
+  measured to the newest commit is 47 days.
+
+One secret is still live and two are rotated, as the task requires.
