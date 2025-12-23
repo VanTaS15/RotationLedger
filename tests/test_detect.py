@@ -37,3 +37,11 @@ class TestDetect(unittest.TestCase):
         b = scan_line('token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"')[0]
         self.assertEqual(a.fingerprint, b.fingerprint)
 
+    def test_fingerprint_never_contains_secret(self):
+        secret = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"
+        f = scan_line(f'token = "{secret}"')[0]
+        self.assertNotIn(secret, f.fingerprint)
+
+
+if __name__ == "__main__":
+    unittest.main()
