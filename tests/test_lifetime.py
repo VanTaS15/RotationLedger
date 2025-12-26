@@ -45,3 +45,13 @@ class TestLifetime(unittest.TestCase):
         self.assertTrue(
             all(isinstance(x, str) for x in exposure_days_report(lifetimes))
         )
+
+    def test_deterministic_output(self):
+        self.assertEqual(
+            exposure_days_report(load_sample()),
+            exposure_days_report(load_sample()),
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
