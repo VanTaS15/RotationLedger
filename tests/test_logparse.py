@@ -54,3 +54,15 @@ class TestLogParse(unittest.TestCase):
         added_texts = [d.text for d in commits[0].added]
         self.assertIn('KEY = "AKIAEXAMPLE00000FAKE"', added_texts)
         removed_texts = [d.text for d in commits[1].removed]
+        self.assertIn('KEY = "AKIAEXAMPLE00000FAKE"', removed_texts)
+
+    def test_added_line_has_path(self):
+        commits = parse_log(LOG)
+        self.assertEqual(commits[0].added[0].path, "config.py")
+
+    def test_empty_input(self):
+        self.assertEqual(parse_log(""), [])
+
+
+if __name__ == "__main__":
+    unittest.main()
