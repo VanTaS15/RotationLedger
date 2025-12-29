@@ -27,3 +27,10 @@ class TestEntropy(unittest.TestCase):
     def test_looks_random_rejects_low_entropy(self):
         self.assertFalse(looks_random("aaaaaaaaaaaaaaaaaaaaaaaa"))
 
+    def test_looks_random_accepts_mixed_high_entropy(self):
+        token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"
+        self.assertTrue(looks_random(token))
+
+
+if __name__ == "__main__":
+    unittest.main()
