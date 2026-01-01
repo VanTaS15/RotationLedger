@@ -63,3 +63,17 @@ def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
         tail = " (open, measured to newest commit)" if life.still_live else ""
         lines.append(
             f"{life.exposure_days:>4}d  {life.rule:<22} {life.fingerprint} "
+            f"{life.state}{tail}"
+        )
+
+    live = sum(1 for l in ordered if l.still_live)
+    rotated = len(ordered) - live
+    total = sum(l.exposure_days for l in ordered)
+    lines.append("")
+    lines.append(
+        f"total={len(ordered)} live={live} rotated={rotated} "
+        f"exposure_days_sum={total}"
+    )
+    return lines
+
+# draft note 1231
