@@ -25,3 +25,10 @@ rotationledger = "rotationledger.cli:main"
 [project.urls]
 Source = "https://example.invalid/rotationledger"
 
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+<!-- draft note 1233 -->
