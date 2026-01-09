@@ -409,3 +409,54 @@ rotationledger/
 | live          | introduced and not removed within the analysed history            |
 | rotated       | introduced and later removed; a closed exposure window            |
 | exposure days | whole days a value was live; a lower bound while still live       |
+| entropy       | Shannon entropy in bits per character, a randomness proxy         |
+
+## Verification
+
+All checks below were run in this session.
+
+Unit tests, `python -m unittest discover -s tests -v`, 31 tests, tail of the
+output:
+
+```
+Ran 31 tests in 0.007s
+
+OK
+```
+
+The tests cover: the parser (commit count, newest-first order, ISO date
+parsing, added/removed line capture, empty input); the entropy math and the
+`looks_random` gate; every detection rule plus fingerprint stability and the
+guarantee that a secret never appears in its own fingerprint; and the full
+lifetime reconstruction against the sample, asserting three tracked credentials,
+one live, two rotated, and the exact 74 and 87 day windows.
+
+The CLI runs end to end against `samples/`; its real output is pasted verbatim in
+the Output format section above, and the exit codes are the ones listed in the
+Exit codes section.
+
+Both SVGs under `docs/assets/` parse as XML:
+
+```
+OK docs/assets\exposure-timeline.svg
+OK docs/assets\logo.svg
+```
+
+A search across the project for the em dash character returns nothing.
+
+## Roadmap
+
+No dates. Candidate work, roughly in order of usefulness:
+
+- Multi-line detection so a PEM key body, not just its header, is recognised.
+- An option to measure live windows against a supplied "as of" date instead of
+  the newest commit, for teams that want days-since-today.
+- A machine-readable output mode (JSON) alongside the current text reports.
+- Per-rule enable/disable flags and configurable generic thresholds via the CLI.
+- A diff mode that takes two exports and reports only newly opened windows.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+<!-- draft note 1234 -->
