@@ -25,3 +25,11 @@ __all__ = [
     "shannon_entropy",
     "Lifetime",
     "reconstruct",
+    "Commit",
+    "DiffLine",
+    "parse_log",
+]
+
+__version__ = "1.0.0"
+
+# draft note 1237
