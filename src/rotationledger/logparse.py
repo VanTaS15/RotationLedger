@@ -133,3 +133,29 @@ def parse_log(text: str) -> list[Commit]:
         if HUNK_RE.match(line):
             subject_pending = False
             continue
+
+        # The commit subject is the first non-empty indented line after Date.
+        if subject_pending:
+            if line.strip():
+                current.subject = line.strip()
+                subject_pending = False
+            continue
+
+        if current_file is None:
+            continue
+
+        # Diff body lines. Ignore the file-header +++ / --- forms handled above.
+        if line.startswith("+") and not line.startswith("+++"):
+            current.added.append(
+                DiffLine(path=current_file, kind="add", text=line[1:])
+            )
+        elif line.startswith("-") and not line.startswith("---"):
+            current.removed.append(
+                DiffLine(path=current_file, kind="del", text=line[1:])
+            )
+
+    if current is not None:
+        commits.append(current)
+    return commits
+
+# draft note 1242
