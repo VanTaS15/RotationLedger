@@ -76,4 +76,4 @@ def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
     )
     return lines
 
-# draft note 1238
+# draft note 1241
