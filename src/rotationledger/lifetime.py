@@ -116,3 +116,6 @@ def reconstruct(commits: list[Commit]) -> list[Lifetime]:
         lifetimes.append(life)
 
     lifetimes.sort(key=lambda l: (l.introduced_at, l.fingerprint))
+    return lifetimes
+
+# draft note 1253
