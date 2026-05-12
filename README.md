@@ -457,6 +457,3 @@ No dates. Candidate work, roughly in order of usefulness:
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
-
-<!-- draft note 1250 -->
