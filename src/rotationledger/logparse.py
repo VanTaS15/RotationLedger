@@ -157,5 +157,3 @@ def parse_log(text: str) -> list[Commit]:
     if current is not None:
         commits.append(current)
     return commits
-
-# draft note 1263
