@@ -75,5 +75,3 @@ def exposure_days_report(lifetimes: list[Lifetime]) -> list[str]:
         f"exposure_days_sum={total}"
     )
     return lines
-
-# draft note 1249
