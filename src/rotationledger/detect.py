@@ -108,5 +108,3 @@ def scan_line(text: str) -> list[Finding]:
         )
 
     return findings
-
-# draft note 1279
