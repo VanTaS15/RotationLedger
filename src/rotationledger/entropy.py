@@ -76,5 +76,3 @@ def looks_random(text: str, min_len: int = 20, min_entropy: float = 3.5) -> bool
     if classify(text).count < 2:
         return False
     return shannon_entropy(text) >= min_entropy
-
-# draft note 1276
