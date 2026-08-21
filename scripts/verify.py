@@ -89,3 +89,186 @@ def check_svg_parses() -> tuple[bool, str]:
     failures: list[str] = []
     for svg in _svgs():
         try:
+            ET.parse(svg)
+        except ET.ParseError as exc:
+            failures.append(f"{svg.relative_to(ROOT)}: {exc}")
+    if failures:
+        return False, "svg parses as XML: " + "; ".join(failures)
+    return True, f"svg parses as XML: {len(_svgs())} file(s) ok"
+
+
+# --- Check 2: no banned filter primitives -----------------------------------
+def check_no_banned_filters() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        text = svg.read_text(encoding="utf-8")
+        for term in BANNED_FILTERS:
+            if term in text:
+                failures.append(f"{svg.relative_to(ROOT)}: {term}")
+    if failures:
+        return False, "no banned filters: " + "; ".join(failures)
+    return True, "no banned filters: none present"
+
+
+# --- Check 3: no illegal -- inside an XML comment ---------------------------
+def check_no_double_hyphen_comment() -> tuple[bool, str]:
+    comment_re = re.compile(r"<!--(.*?)-->", re.DOTALL)
+    failures: list[str] = []
+    for svg in _svgs():
+        text = svg.read_text(encoding="utf-8")
+        for body in comment_re.findall(text):
+            if "--" in body:
+                failures.append(str(svg.relative_to(ROOT)))
+                break
+    if failures:
+        return False, "no -- in XML comments: " + "; ".join(failures)
+    return True, "no -- in XML comments: clean"
+
+
+# --- Check 4: no em dash in any tracked text file ---------------------------
+def check_no_em_dash() -> tuple[bool, str]:
+    failures: list[str] = []
+    for path in _iter_files():
+        if not _is_text(path):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for form in EM_DASH_FORMS:
+            if form in text:
+                failures.append(f"{path.relative_to(ROOT)}: {form!r}")
+    if failures:
+        return False, "no em dash (U+2014/&#8212;/&mdash;): " + "; ".join(failures)
+    return True, "no em dash (U+2014/&#8212;/&mdash;): clean"
+
+
+# --- Check 5: no pandoc image attribute block in README ---------------------
+def check_no_pandoc_image_attr() -> tuple[bool, str]:
+    if not README.is_file():
+        return True, "no pandoc image attr in README: README absent"
+    text = README.read_text(encoding="utf-8")
+    # Match ){ ... width|height ... } as in ![alt](path){width=200}.
+    pat = re.compile(r"\)\{[^}]*(?:width|height)[^}]*\}")
+    if pat.search(text):
+        return False, "no pandoc image attr in README: found ){...width/height...}"
+    return True, "no pandoc image attr in README: clean"
+
+
+# --- Check 6: no banned marketing terms in README ---------------------------
+def check_no_marketing() -> tuple[bool, str]:
+    if not README.is_file():
+        return True, "no marketing terms in README: README absent"
+    text = README.read_text(encoding="utf-8").lower()
+    hits = [t for t in BANNED_MARKETING if t in text]
+    if hits:
+        return False, "no marketing terms in README: " + ", ".join(hits)
+    return True, "no marketing terms in README: clean"
+
+
+# --- Check 7: every SVG has viewBox, role=img, title, desc ------------------
+def check_svg_accessibility() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        try:
+            root = ET.parse(svg).getroot()
+        except ET.ParseError:
+            failures.append(f"{svg.relative_to(ROOT)}: unparseable")
+            continue
+        missing: list[str] = []
+        if not root.get("viewBox"):
+            missing.append("viewBox")
+        if root.get("role") != "img":
+            missing.append('role="img"')
+        if root.find(f"{SVG_NS}title") is None:
+            missing.append("<title>")
+        if root.find(f"{SVG_NS}desc") is None:
+            missing.append("<desc>")
+        if missing:
+            failures.append(f"{svg.relative_to(ROOT)}: {', '.join(missing)}")
+    if failures:
+        return False, "svg accessibility: " + "; ".join(failures)
+    return True, f"svg accessibility: {len(_svgs())} file(s) ok"
+
+
+# --- Check 8: no two labels on the same baseline overlap --------------------
+def _char_width_em(font_family: str) -> float:
+    fam = (font_family or "").lower()
+    mono_hints = ("mono", "consolas", "courier", "cascadia", "jetbrains")
+    return 0.60 if any(h in fam for h in mono_hints) else 0.58
+
+
+def _text_extent(elem, x: float, size: float, anchor: str) -> tuple[float, float]:
+    content = "".join(elem.itertext())
+    width = len(content) * _char_width_em(elem.get("font-family", "")) * size
+    if anchor == "middle":
+        return x - width / 2.0, x + width / 2.0
+    if anchor == "end":
+        return x - width, x
+    return x, x + width
+
+
+def check_no_label_overlap() -> tuple[bool, str]:
+    failures: list[str] = []
+    for svg in _svgs():
+        try:
+            root = ET.parse(svg).getroot()
+        except ET.ParseError:
+            continue
+        rows: dict[int, list[tuple[float, float, str]]] = {}
+        for text_el in root.iter(f"{SVG_NS}text"):
+            x_raw = text_el.get("x")
+            y_raw = text_el.get("y")
+            if x_raw is None or y_raw is None:
+                continue
+            try:
+                x = float(x_raw)
+                y = float(y_raw)
+                size = float(text_el.get("font-size", "12"))
+            except ValueError:
+                continue
+            anchor = text_el.get("text-anchor", "start")
+            left, right = _text_extent(text_el, x, size, anchor)
+            label = "".join(text_el.itertext()).strip()
+            rows.setdefault(round(y), []).append((left, right, label))
+        for y, items in rows.items():
+            items.sort(key=lambda t: t[0])
+            for i in range(1, len(items)):
+                prev_l, prev_r, prev_lbl = items[i - 1]
+                cur_l, cur_r, cur_lbl = items[i]
+                if cur_l < prev_r - 0.5:
+                    failures.append(
+                        f"{svg.relative_to(ROOT)} y~{y}: "
+                        f"'{prev_lbl}' overlaps '{cur_lbl}'"
+                    )
+    if failures:
+        return False, "no overlapping labels: " + "; ".join(failures)
+    return True, "no overlapping labels: clean"
+
+
+CHECKS = [
+    check_svg_parses,
+    check_no_banned_filters,
+    check_no_double_hyphen_comment,
+    check_no_em_dash,
+    check_no_pandoc_image_attr,
+    check_no_marketing,
+    check_svg_accessibility,
+    check_no_label_overlap,
+]
+
+
+def main() -> int:
+    failures = 0
+    for check in CHECKS:
+        ok, message = check()
+        status = "PASS" if ok else "FAIL"
+        if not ok:
+            failures += 1
+        print(f"[{status}] {message}")
+    print(f"verify: {len(CHECKS)} checks, {failures} failures")
+    return 0 if failures == 0 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
