@@ -26,3 +26,32 @@ class TestLifetime(unittest.TestCase):
 
     def test_two_rotated(self):
         rotated = [l for l in load_sample() if not l.still_live]
+        self.assertEqual(len(rotated), 2)
+
+    def test_aws_key_exposure_window(self):
+        # Introduced 2026-01-05, removed 2026-03-20 => 74 days.
+        aws = [l for l in load_sample() if l.rule == "aws-access-key"][0]
+        self.assertFalse(aws.still_live)
+        self.assertEqual(aws.exposure_days, 74)
+
+    def test_bearer_exposure_window(self):
+        # Introduced 2026-01-05, removed 2026-04-02 => 87 days.
+        bearer = [l for l in load_sample() if l.rule == "bearer-token"][0]
+        self.assertEqual(bearer.exposure_days, 87)
+
+    def test_reports_are_line_lists(self):
+        lifetimes = load_sample()
+        self.assertTrue(all(isinstance(x, str) for x in lifetime_report(lifetimes)))
+        self.assertTrue(
+            all(isinstance(x, str) for x in exposure_days_report(lifetimes))
+        )
+
+    def test_deterministic_output(self):
+        self.assertEqual(
+            exposure_days_report(load_sample()),
+            exposure_days_report(load_sample()),
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
