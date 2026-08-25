@@ -19,5 +19,3 @@ Keep a Changelog, and this project uses semantic versioning.
 - Hand authored `samples/history.gitlog` test vector with one still-live and
   two rotated synthetic credentials.
 - `docs/assets/logo.svg` and `docs/assets/exposure-timeline.svg`.
-
-<!-- draft note 1230 -->
