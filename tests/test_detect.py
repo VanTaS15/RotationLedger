@@ -13,3 +13,35 @@ class TestDetect(unittest.TestCase):
         findings = scan_line("-----BEGIN RSA PRIVATE KEY-----")
         self.assertEqual([f.rule for f in findings], ["private-key-header"])
 
+    def test_bearer_token(self):
+        findings = scan_line('Authorization: Bearer abcDEF123456ghiJKL7890mnoPQR')
+        self.assertIn("bearer-token", [f.rule for f in findings])
+
+    def test_connection_string(self):
+        findings = scan_line("postgres://user:s3cretPass99@db.example.invalid/app")
+        self.assertIn("connection-string", [f.rule for f in findings])
+
+    def test_generic_high_entropy(self):
+        line = 'api_key = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"'
+        self.assertIn("generic-high-entropy", [f.rule for f in scan_line(line)])
+
+    def test_generic_low_entropy_rejected(self):
+        line = 'password = "aaaaaaaaaaaaaaaaaaaaaaaa"'
+        self.assertEqual(scan_line(line), [])
+
+    def test_plain_prose_has_no_findings(self):
+        self.assertEqual(scan_line("this is an ordinary sentence in a diff"), [])
+
+    def test_fingerprint_is_stable(self):
+        a = scan_line('token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"')[0]
+        b = scan_line('token = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"')[0]
+        self.assertEqual(a.fingerprint, b.fingerprint)
+
+    def test_fingerprint_never_contains_secret(self):
+        secret = "sk9dQ2vTb7Lm4Rw8Xy1Zc3Np6Kf0Hg5"
+        f = scan_line(f'token = "{secret}"')[0]
+        self.assertNotIn(secret, f.fingerprint)
+
+
+if __name__ == "__main__":
+    unittest.main()
