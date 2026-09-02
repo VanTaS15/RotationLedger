@@ -27,3 +27,93 @@ from .logparse import Commit
 class Lifetime:
     """The tracked life of one credential occurrence."""
 
+    fingerprint: str
+    rule: str
+    introduced_sha: str
+    introduced_at: datetime
+    removed_sha: str | None = None
+    removed_at: datetime | None = None
+    still_live: bool = True
+
+    @property
+    def exposure_days(self) -> int:
+        """Whole days between introduction and removal.
+
+        For a still-live secret this is measured against the newest commit in
+        the analysed history, since the tool is offline and has no later
+        reference point. The report labels this case as open ended.
+        """
+
+        end = self.removed_at if self.removed_at is not None else self._head_date
+        if end is None:
+            return 0
+        delta = end - self.introduced_at
+        return max(delta.days, 0)
+
+    # Set by the reconstructor for still-live secrets.
+    _head_date: datetime | None = field(default=None, repr=False)
+
+    @property
+    def state(self) -> str:
+        return "live" if self.still_live else "rotated"
+
+
+def _findings_by_fingerprint(lines) -> dict[str, str]:
+    """Map fingerprint -> rule name for a set of diff lines."""
+
+    out: dict[str, str] = {}
+    for dl in lines:
+        for f in scan_line(dl.text):
+            out.setdefault(f.fingerprint, f.rule)
+    return out
+
+
+def reconstruct(commits: list[Commit]) -> list[Lifetime]:
+    """Build lifetimes from commits.
+
+    ``commits`` is expected newest-first (as git prints). The walk runs oldest
+    first so introduction precedes removal in time.
+    """
+
+    if not commits:
+        return []
+
+    oldest_first = list(reversed(commits))
+    head_date = oldest_first[-1].date
+
+    # fingerprint -> currently open Lifetime, if any.
+    open_life: dict[str, Lifetime] = {}
+    lifetimes: list[Lifetime] = []
+
+    for commit in oldest_first:
+        added = _findings_by_fingerprint(commit.added)
+        removed = _findings_by_fingerprint(commit.removed)
+
+        # Removals first: a line changed in one commit shows as del then add,
+        # but for distinct fingerprints order does not matter within a commit.
+        for fp, _rule in removed.items():
+            life = open_life.get(fp)
+            if life is not None and fp not in added:
+                life.removed_sha = commit.short
+                life.removed_at = commit.date
+                life.still_live = False
+                lifetimes.append(life)
+                del open_life[fp]
+
+        for fp, rule in added.items():
+            if fp in open_life:
+                continue
+            open_life[fp] = Lifetime(
+                fingerprint=fp,
+                rule=rule,
+                introduced_sha=commit.short,
+                introduced_at=commit.date,
+            )
+
+    for life in open_life.values():
+        life.still_live = True
+        life._head_date = head_date
+        lifetimes.append(life)
+
+    lifetimes.sort(key=lambda l: (l.introduced_at, l.fingerprint))
+    return lifetimes
