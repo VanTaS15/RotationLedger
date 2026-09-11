@@ -1,9 +1,19 @@
-<img align="right" width="190" src="docs/assets/logo.svg" alt="rotationledger wordmark with a single lifetime segment running from an amber introduce point on the left to a teal rotate point on the right">
+<div align="center">
 
-# rotationledger
+<img src="docs/assets/logo.svg" width="190" alt="RotationLedger logo" />
 
-Track the lifetime of leaked secrets through git history, and report how long
-each one stayed exposed.
+# RotationLedger
+
+**Track the lifetime of leaked secrets through git history** - detect credential-shaped strings offline and report how long each stayed exposed.
+
+[![ci](https://github.com/VanTaS15/RotationLedger/actions/workflows/ci.yml/badge.svg)](https://github.com/VanTaS15/RotationLedger/actions/workflows/ci.yml)
+![license](https://img.shields.io/badge/license-MIT-blue)
+![python](https://img.shields.io/badge/python-3.11%2B-blue)
+
+</div>
+
+---
+
 
 rotationledger reads a committed `git log -p` export, offline, with no call to
 git at run time. It detects credential-shaped strings using Shannon entropy
@@ -27,7 +37,7 @@ scan, the interesting facts are historical: when did this value first enter the
 repository, how many days did it sit there readable to anyone with clone
 access, and did anyone ever actually remove it.
 
-rotationledger reframes the finding around exposure duration. Every detected
+RotationLedger reframes the finding around exposure duration. Every detected
 credential is keyed to a fingerprint and followed across the whole commit
 range. The output separates two populations that a count-based scanner blends
 together:
@@ -182,7 +192,7 @@ your codebase rather than assuming the defaults are correct for your data.
 
 ## Why fingerprints and not values
 
-rotationledger never stores or prints a raw secret value. Every finding is keyed
+RotationLedger never stores or prints a raw secret value. Every finding is keyed
 to a fingerprint, which is a truncated SHA-256 of the matched bytes: the full
 digest computed with `hashlib.sha256`, hex-encoded, then cut to the first 12
 characters (`_fingerprint` in `detect.py`).
