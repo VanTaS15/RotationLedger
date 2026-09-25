@@ -9,3 +9,25 @@ at HEAD. The headline artifact is an exposure-days report.
 Standard library only, Python 3.11+, no network access.
 """
 
+from __future__ import annotations
+
+from .detect import Finding, scan_line
+from .entropy import CharClasses, classify, looks_random, shannon_entropy
+from .lifetime import Lifetime, reconstruct
+from .logparse import Commit, DiffLine, parse_log
+
+__all__ = [
+    "Finding",
+    "scan_line",
+    "CharClasses",
+    "classify",
+    "looks_random",
+    "shannon_entropy",
+    "Lifetime",
+    "reconstruct",
+    "Commit",
+    "DiffLine",
+    "parse_log",
+]
+
+__version__ = "1.0.0"
