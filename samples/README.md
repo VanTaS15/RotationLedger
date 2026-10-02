@@ -22,3 +22,28 @@ values authenticate against any real system:
 - `Bearer EXAMPLEfakeTOKENzzz0000abcd1234EXAMPLE` is a placeholder bearer token
   that again spells EXAMPLE and fake.
 - `sk-live-EXAMPLE9d4f7b2a6c8e1f3a5b7d9e0c2f4a6b8dFAKE` is a placeholder that
+  uses the common `sk-live-` prefix but is padded with the words EXAMPLE and
+  FAKE.
+
+### Commit timeline
+
+The export contains four commits, printed newest first as git does:
+
+| commit    | date       | event                                              |
+|-----------|------------|----------------------------------------------------|
+| 9f3c1a7d  | 2026-04-02 | removes the bearer token, reads from env at runtime |
+| 7a2b9c8d  | 2026-03-20 | rotates the leaked AWS access key to an env lookup  |
+| 5c4d3e2f  | 2026-02-14 | adds a still-live generic analytics api key         |
+| 3e2f1a0b  | 2026-01-05 | initial commit that plants the AWS key and bearer   |
+
+### Expected lifetimes
+
+Produced by `rotationledger lifetime samples/history.gitlog` and checked in
+`tests/test_lifetime.py`:
+
+- aws-access-key: introduced 2026-01-05, rotated 2026-03-20, exposure 74 days.
+- bearer-token: introduced 2026-01-05, rotated 2026-04-02, exposure 87 days.
+- generic-high-entropy: introduced 2026-02-14, still live at HEAD, exposure
+  measured to the newest commit is 47 days.
+
+One secret is still live and two are rotated, as the task requires.
