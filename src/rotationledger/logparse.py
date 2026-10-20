@@ -13,8 +13,12 @@ model the full diff grammar.
 from __future__ import annotations
 
 import re
+
+
+class LogParseError(ValueError):
+    """Raised when a log line or timestamp cannot be parsed."""
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 
 COMMIT_RE = re.compile(r"^commit ([0-9a-f]{7,40})\b")
@@ -67,9 +71,12 @@ def _parse_git_date(raw: str) -> datetime:
         dt = datetime.strptime(base, "%Y-%m-%d %H:%M:%S")
         tz = iso.group(3)
         if tz:
-            offset = int(tz[:3]) * 60 + int(tz[0] + tz[3:])
-            dt = dt.replace(tzinfo=timezone.utc)
-            return dt
+            hours, minutes = int(tz[1:3]), int(tz[3:5])
+            if hours > 23 or minutes > 59:
+                raise LogParseError(f"invalid UTC offset in timestamp {raw!r}")
+            offset = (hours * 60 + minutes) * (1 if tz[0] == "+" else -1)
+            dt = dt.replace(tzinfo=timezone(timedelta(minutes=offset)))
+            return dt.astimezone(timezone.utc)
         return dt.replace(tzinfo=timezone.utc)
     for fmt in ("%a %b %d %H:%M:%S %Y %z", "%a %b %d %H:%M:%S %Y"):
         try:
@@ -79,7 +86,9 @@ def _parse_git_date(raw: str) -> datetime:
             return dt.astimezone(timezone.utc)
         except ValueError:
             continue
-    return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    if not raw.strip():
+        return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    raise LogParseError(f"unparsable date: {raw!r}")
 
 
 def parse_log(text: str) -> list[Commit]:
